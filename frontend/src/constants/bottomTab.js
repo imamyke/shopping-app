@@ -2,29 +2,29 @@ import {
   AppOutline,
   MessageOutline,
   UnorderedListOutline,
-  UserOutline,
+  SmileOutline,
 } from 'antd-mobile-icons'
 
 const bottomTab = [
   {
     key: '/',
     title: '首页',
-    icon: <AppOutline />
+    icon: <i class="fa-solid fa-house fa-sm"></i>
   },
   {
     key: '/video',
     title: '视频',
-    icon: <UnorderedListOutline />
+    icon: <i class="fa-solid fa-video fa-sm"></i>
   },
   {
     key: '/cart',
     title: '购物车',
-    icon: <MessageOutline />
+    icon: <i class="fa-solid fa-bag-shopping"></i>
   },
   {
     key: '/about',
     title: '我的',
-    icon: <UserOutline />
+    icon: <i class="fa-regular fa-face-smile fa-sm"></i>
   }
 ]
 
