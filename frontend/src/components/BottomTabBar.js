@@ -8,6 +8,13 @@ const StyledBottomTabBar = styled.div`
   right: 0;
   z-index: 1000;
   background: #FEF4DB;
+  .adm-tab-bar-item {
+    color: #453C41;
+  }
+  .adm-tab-bar-item-active {
+    color: #AA1803;
+    font-weight: bold;
+  }
 `
 
 const BottomTabBar = ({ tabName, pathname, onChange }) => {

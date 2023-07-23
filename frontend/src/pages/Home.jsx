@@ -7,9 +7,8 @@ import { bottomTab, topTab } from '../constants'
 import styled from 'styled-components'
 
 const StyledTopBarHeader = styled.header`
-  background: #ff5500;
-  padding: 12px 12px 0 12px;
-  border: 1px solid #000;
+  background: #AA1803;
+  padding: 16px 12px 0 12px;
   position: fixed;
   top: 0;
   left: 0;
@@ -22,7 +21,6 @@ const StyledSearchBar = styled.div`
     border-radius: 16px;
     text-align: center;
     padding-left: 8px;
-    margin-bottom: 12px;
     .searchbar-scanning-logo {
       width: 30px;
       align-self: center;
@@ -41,10 +39,11 @@ const StyledSearchBar = styled.div`
     .searchbar-button {
       width: 60px;
       button {
+        font-weight: bold;
         width: 100%;
         line-height: 30px;
         border-radius: 16px;
-        background: #ff5500;
+        background: #AA1803;
         border: 2px solid #fff;
         color: #fff;
         text-align: center;
@@ -80,6 +79,15 @@ const Home = () => {
         <Tabs 
           activeKey={topTab[activeIndex].key}
           onChange={key => handleChange(key)}
+          activeLineMode='fixed'
+          style={{
+            '--title-font-size': '13px',
+            '--active-title-color': '#F4F3EE',
+            '--active-line-color': '#F4F3EE',
+            '--fixed-active-line-width': '15px',
+            '--content-padding': '10px',
+            color: '#fff',
+          }}
         >
           {topTab.map(tab => 
             <Tabs.Tab {...tab}></Tabs.Tab>  
