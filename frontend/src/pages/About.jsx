@@ -3,6 +3,7 @@ import { BottomTabBar } from '../components'
 import bottomTab from '../constants/bottomTab'
 
 
+
 const About = () => {
   const { pathname } = useLocation()
   const handleNavigate = useNavigate()
@@ -18,5 +19,7 @@ const About = () => {
     </>
   )
 }
+
+
 
 export default About

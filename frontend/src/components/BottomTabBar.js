@@ -3,10 +3,11 @@ import styled from 'styled-components'
 
 const StyledBottomTabBar = styled.div`
   position: fixed;
-  width: 100%;
   bottom: 0;
   left: 0;
-  border: 1px solid #000;
+  right: 0;
+  z-index: 1000;
+  background: #FEF4DB;
 `
 
 const BottomTabBar = ({ tabName, pathname, onChange }) => {
