@@ -1,6 +1,6 @@
 const User = require('../models/user')
 const asyncHandler = require('express-async-handler')
-const jwt = require('jsonwebtoken')
+const generateToken = require('../utils/generateToken')
 
 const userController = {
   authUser: asyncHandler (async (req, res) => {
@@ -12,7 +12,7 @@ const userController = {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: null
+        token: generateToken(user._id)
       })
     } else {
       res.status(401)
