@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-// const routers = require('./routes')
+const routers = require('./routes')
 const cors = require('cors')
 const connectDB = require('./config/db')
 // const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
   res.send('API is running...')
 })
 app.use(cors())
-// app.use(routers)
+app.use(routers)
 // app.use(notFound)
 // app.use(errorHandler)
 
