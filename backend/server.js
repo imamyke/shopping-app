@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 // const routers = require('./routes')
 const cors = require('cors')
-// const connectDB = require('./config/db')
+const connectDB = require('./config/db')
 // const { notFound, errorHandler } = require('./middlewares/errorMiddleware')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// connectDB()
+connectDB()
 app.get('/', (req, res) => {
   res.send('API is running...')
 })
