@@ -4,19 +4,19 @@ const generateToken = require('../utils/generateToken')
 
 const userController = {
   authUser: asyncHandler (async (req, res) => {
-    const {email , password} = req.body
-    const user = await User.findOne({ email })
-    if (user && (await user.matchPassword(password))) {
+    const { phone } = req.body
+    const user = await User.findOne({ phone })
+    if (user) {
       res.json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id)
       })
     } else {
       res.status(401)
-      throw new Error('Invalid email or password')
+      throw new Error('无效的手机号')
     }
   }),
   getUserProfile: asyncHandler (async (req, res) => {
@@ -25,28 +25,28 @@ const userController = {
       res.json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin
       })
     } else {
       res.status(404)
-      throw new Error('User not found')
+      throw new Error('此手机号还未注册')
     }
   }),
   signupUser: asyncHandler (async (req, res) => {
-    const { name, email, password } = req.body
-    const userExist = await User.findOne({ email })
+    const { name, phone } = req.body
+    const userExist = await User.findOne({ phone })
 
     if (userExist) {
       res.status(400)
-      throw new Error('User already exists')
+      throw new Error('此手機號已經被註冊')
     }
-    const user = await User.create({ name, email, password })
+    const user = await User.create({ name, phone })
     if (user) {
       res.status(201).json({
         _id: user._id,
         name: user.name,
-        email: user.email,
+        phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id)
       })

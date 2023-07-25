@@ -1,9 +1,7 @@
-const bcrypt = require('bcryptjs')
-
 const users = [
-  { name: 'Admin User', email: 'admin@example.com.tw', password: bcrypt.hashSync('123456', 10), isAdmin: true },
-  { name: 'Amy Ke', email: 'amyke@example.com.tw', password: bcrypt.hashSync('123456', 10) },
-  { name: 'The8', email: 'the8@example.com.tw', password: bcrypt.hashSync('123456', 10) }
+  { name: 'Admin', phone: '12345678111', isAdmin: true },
+  { name: 'Amy Ke', phone: '12345678222' },
+  { name: 'The8', phone: '12345678333' }
 ]
 
 module.exports = users
