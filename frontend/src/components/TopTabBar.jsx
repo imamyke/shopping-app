@@ -72,7 +72,7 @@ const TopTabBar = ({ tabName, activeIndex, setActiveIndex, onChange, swiperRef, 
 export default TopTabBar
 
 const StyledTopBarHeader = styled.header`
-  background: #AA1803;
+  background: #fb5d5a;
   padding: 16px 12px 0 12px;
   position: fixed;
   top: 0;
@@ -97,7 +97,7 @@ const StyledTopBarHeader = styled.header`
     text-align: center;
     color: #fff;
     line-height: 30px;
-    background: #AA1803;
+    background: #fb5d5a;
   }
   .adm-tabs-header {
     border-bottom: 0;
@@ -131,7 +131,7 @@ const StyledSearchBar = styled.div`
         width: 100%;
         line-height: 30px;
         border-radius: 16px;
-        background: #AA1803;
+        background: #fb5d5a;
         border: 2px solid #fff;
         color: #fff;
         text-align: center;

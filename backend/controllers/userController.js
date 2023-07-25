@@ -4,7 +4,11 @@ const generateToken = require('../utils/generateToken')
 
 const userController = {
   authUser: asyncHandler (async (req, res) => {
-    const { phone } = req.body
+    const { phone, verifyCode } = req.body
+    if (verifyCode !== 123456) {
+      res.status(401)
+      throw new Error(`无效的验证码${verifyCode}`)
+    }
     const user = await User.findOne({ phone })
     if (user) {
       res.json({
@@ -49,6 +53,21 @@ const userController = {
         phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id)
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid user data')
+    }
+  }),
+  getVerifyCode: asyncHandler (async (req, res) => {
+    const { phone } = req.body
+
+    if (phone) {
+      res.status(201).json({
+        code: 123456,
+        data: {},
+        message: 'success',
+        success: true
       })
     } else {
       res.status(400)

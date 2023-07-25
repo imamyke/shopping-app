@@ -2,33 +2,33 @@ const loginTabs = [
   {
     key: 'apple',
     icon: "fa-solid fa-apple-whole",
-    iconColor: '#000',
+    color: '#000',
   },
   {
     key: 'wechat',
     icon: "fa-regular fa-comment-dots",
-    iconColor: '#b5e0a7',
+    color: '#b5e0a7',
     style: {
-      circleBackground: '#ecf6e9',
-      circleBorder: 'none'
+      tabbackground: '#ecf6e9',
+      tabborder: 'none'
     }
   },
   {
     key: 'phone',
     icon: "fa-solid fa-mobile-screen",
-    iconColor: '#ebadac',
+    color: '#ebadac',
     style: {
-      circleBackground: '#fbf0f0',
-      circleBorder: 'none'
+      tabbackground: '#fbf0f0',
+      tabborder: 'none'
     }
   },
   {
     key: 'personalCenter',
     icon: "fa-regular fa-envelope",
-    iconColor: '#54baf3',
+    color: '#54baf3',
     style: {
-      circleBackground: '#ecf8ff',
-      circleBorder: 'none'
+      tabbackground: '#ecf8ff',
+      tabborder: 'none'
     }
   },
 ]

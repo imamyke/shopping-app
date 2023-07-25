@@ -7,12 +7,12 @@ const StyledBottomTabBar = styled.div`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #FEF4DB;
+  background: #f3f0f0;
   .adm-tab-bar-item {
     color: #453C41;
   }
   .adm-tab-bar-item-active {
-    color: #AA1803;
+    color: #fb5d5a;
     font-weight: bold;
   }
 `
