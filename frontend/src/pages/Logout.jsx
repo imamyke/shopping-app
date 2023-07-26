@@ -1,5 +1,5 @@
 import avatar from '../assets/images/avatar.jpeg'
-import { NavBar, Modal, Button } from "antd-mobile"
+import { NavBar, Button } from "antd-mobile"
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 import { Image, List } from 'antd-mobile'
@@ -9,15 +9,13 @@ import { logout } from '../store/actions'
 // 18681547948
 const Logout = () => {
   const navigate = useNavigate()
-
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   const dispatch = useDispatch()
-
   const handleLogout = async () => {
     dispatch(logout())
   }
-  
+
   return (
     <>
       <StyledNavbarContainer>
@@ -36,9 +34,9 @@ const Logout = () => {
               />
             }
             onClick={() => navigate('/profile')}
-            description={`帐号名: ${userInfo.accountName || 'imamyke'}`}
+            description={`帐号名: ${userInfo && userInfo.accountName}`}
           >
-            {userInfo.name || '思宇 Amy'}
+            {userInfo && userInfo.name}
           </List.Item>
         </List>
       </StyledList>

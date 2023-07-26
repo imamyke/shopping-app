@@ -7,6 +7,11 @@ const userSchema = new Schema({
     required: true,
     default: 'User'
   },
+  accountName: {
+    type: String,
+    required: true,
+    default: 'account_name'
+  },
   phone: {
     type: String,
     required: true,

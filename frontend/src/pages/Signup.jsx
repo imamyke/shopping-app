@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { phoneReg, verifyCodeReg } from '../constants'
-import { NavBar, Footer, Toast, SpinLoading, NoticeBar, Button, Modal } from "antd-mobile"
-import { Link, useNavigate } from 'react-router-dom'
+import { NavBar, Toast, SpinLoading, NoticeBar, Modal } from "antd-mobile"
+import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../store/actions'
+import { signup } from '../store/actions'
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -13,10 +13,10 @@ const Signup = () => {
   const [code, setCode] = useState('')
   const [time, setTime] = useState(null)
 
-  const userLogin = useSelector(state => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const userSignup = useSelector(state => state.userSignup)
+  const { loading, error, userInfo } = userSignup
   const dispatch = useDispatch()
-
+  
   const handleVerifyCode = async () => {
     const phone = phoneNumer
     if (phoneReg.test(phone)) {
@@ -37,7 +37,7 @@ const Signup = () => {
     e.preventDefault()
     const verifyCode = code
     if (verifyCodeReg.test(verifyCode)) {
-      dispatch(login(phoneNumer, verifyCode))
+      dispatch(signup(phoneNumer, verifyCode))
     } else {
       Toast.show({
         icon: 'fail',
@@ -61,19 +61,12 @@ const Signup = () => {
   }
   
   useEffect(() => {
-    error && (Modal.alert({
-        content: error,
-        closeOnMaskClick: true,
-      })
-    )
-  }, [error])
-
-  useEffect(() => {
     if (userInfo) {
       navigate('/')
     }
   }, [userInfo, navigate])
 
+  console.log(userInfo, error);
   return (
     <>
       <StyledNavbarContainer>
@@ -112,6 +105,9 @@ const Signup = () => {
               type="submit" 
               className="login-button" 
             >一键快速注册</button>
+          </div>
+          <div className='error'>
+            { error && <NoticeBar color='alert' content={error} /> }
           </div>
         </form>
       </StyledLoginContainer>  

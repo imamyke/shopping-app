@@ -14,6 +14,7 @@ const userController = {
       res.json({
         _id: user._id,
         name: user.name,
+        accountName: user.accountName,
         phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id)
@@ -55,6 +56,7 @@ const userController = {
       res.status(201).json({
         _id: user._id,
         name: user.name,
+        accountName: user.accountName,
         phone: user.phone,
         isAdmin: user.isAdmin,
         token: generateToken(user._id)
