@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import { Tabs, Swiper } from 'antd-mobile'
-import { ScanningOutline } from 'antd-mobile-icons'
-import { Link } from 'react-router-dom'
+import { ScanningOutline, SetOutline } from 'antd-mobile-icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 // 之後 title要改children
 const swiperItemsGenerate = (tab) => {
@@ -11,20 +12,40 @@ const swiperItemsGenerate = (tab) => {
 }
 
 const TopTabBar = ({ tabName, activeIndex, setActiveIndex, onChange, swiperRef, swiperTab}) => {
+  const navigate = useNavigate()
+  
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
 
   return (
     <>
       <StyledTopBarHeader>
-        <StyledSearchBar>
-          <div className='searchbar-scanning-logo'>
-            <ScanningOutline fontSize={24} />
-          </div>
-          <input type="text" placeholder='请搜寻喜欢的宝贝' />
-          <div className='searchbar-button'>
-            <button type='button'>搜索</button>
-          </div>
-        </StyledSearchBar>
-          <div className="row">
+        <StyledTopBarContainer>
+          <StyledSearchBar>
+            <div className='searchbar-scanning-logo'>
+              <ScanningOutline fontSize={24} />
+            </div>
+            <input type="text" placeholder='请搜寻喜欢的宝贝' />
+            <div className='searchbar-button'>
+              <button type='button'>搜索</button>
+            </div>
+          </StyledSearchBar>
+          <StyledLoginIcon>
+            { userInfo ? (
+              <SetOutline 
+                fontSize={28} 
+                color='#fff'
+                onClick={() => navigate('/logout')} 
+              />
+            ) : (
+              <i 
+                onClick={() => navigate('/login')}
+                class="fa-regular fa-comment"
+              ></i>
+            )}
+          </StyledLoginIcon>
+        </StyledTopBarContainer>
+          <div className="toptab-bar row">
             <div className="col-flex">
             <Tabs 
               activeKey={tabName[activeIndex].key}
@@ -105,6 +126,7 @@ const StyledTopBarHeader = styled.header`
 `
 const StyledSearchBar = styled.div`
     display: flex;
+    flex: 1;
     background: #fff;
     border-radius: 16px;
     text-align: center;
@@ -137,6 +159,21 @@ const StyledSearchBar = styled.div`
         text-align: center;
       }
     }
+`
+const StyledTopBarContainer = styled.div`
+  display: flex;
+`
+const StyledLoginIcon = styled.div`
+  width: 36px;
+  text-align: center;
+  i {
+    line-height: 30px;
+    font-size: 28px;
+    color: #fff;
+  }
+  svg {
+    margin-top: 3px;
+  }
 `
 const StyledSwiperContainer = styled.div`
   padding-top: 100px;

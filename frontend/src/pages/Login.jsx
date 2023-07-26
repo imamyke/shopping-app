@@ -5,12 +5,11 @@ import { CloseOutline } from "antd-mobile-icons"
 import { Link, useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 import { loginTabs } from '../constants'
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../store/actions'
 
 const Login = () => {
-  const inputRef = useRef(null)
   const navigate = useNavigate()
   const [phoneNumer, setPhoneNumer] = useState('')
   const [code, setCode] = useState('')
@@ -19,10 +18,6 @@ const Login = () => {
   const userLogin = useSelector(state => state.userLogin)
   const { loading, error, userInfo } = userLogin
   const dispatch = useDispatch()
-
-  const handleChange = (value) => {
-    setPhoneNumer(value)
-  }
 
   const handleVerifyCode = async () => {
     const phone = phoneNumer
@@ -43,7 +38,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const verifyCode = code
-    console.log(typeof(verifyCode));
     if (verifyCodeReg.test(verifyCode)) {
       dispatch(login(phoneNumer, verifyCode))
     } else {
@@ -66,10 +60,6 @@ const Login = () => {
         return false
       }
     }, 1000)
-  }
-
-  const handleVerify = (e) => {
-    setCode(e)
   }
 
   useEffect(() => {
@@ -97,7 +87,7 @@ const Login = () => {
                 type="text" 
                 placeholder="请输入手机号" 
                 value={phoneNumer}
-                onChange={(e) => handleChange(e.target.value)}
+                onChange={(e) => setPhoneNumer(e.target.value)}
               />
             </div>
             <div className="form-item verify-code">
@@ -105,7 +95,7 @@ const Login = () => {
                 type="text" 
                 placeholder="请输入验证码"
                 value={code}
-                onChange={(e) => handleVerify(e.target.value)}
+                onChange={(e) => setCode(e.target.value)}
               />
               <button 
                 className='verify-button'

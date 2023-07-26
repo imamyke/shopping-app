@@ -5,5 +5,6 @@ import Cart from "./Cart"
 import About from "./About"
 import Login from "./Login";
 import Signup from "./Signup"
+import Logout from "./Logout"
 
-export { Home, Video, Category, Cart, About, Login, Signup }
+export { Home, Video, Category, Cart, About, Login, Signup, Logout }

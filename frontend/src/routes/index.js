@@ -1,4 +1,4 @@
-import { Home, Video, Category, Cart, About, Login, Signup } from '../pages'
+import { Home, Video, Category, Cart, About, Login, Signup, Logout } from '../pages'
 
 const routes = [
   {
@@ -28,7 +28,11 @@ const routes = [
   {
     path: '/signup',
     element: <Signup />
-  }
+  },
+  {
+    path: '/logout',
+    element: <Logout />
+  },
 ]
 
 export default routes

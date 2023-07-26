@@ -38,14 +38,19 @@ const userController = {
     }
   }),
   signupUser: asyncHandler (async (req, res) => {
-    const { name, phone } = req.body
+    const { phone, verifyCode } = req.body
+    if (verifyCode !== 123456) {
+      res.status(401)
+      throw new Error(`无效的验证码${verifyCode}`)
+    }
+    
     const userExist = await User.findOne({ phone })
 
     if (userExist) {
       res.status(400)
       throw new Error('此手機號已經被註冊')
     }
-    const user = await User.create({ name, phone })
+    const user = await User.create({ phone })
     if (user) {
       res.status(201).json({
         _id: user._id,

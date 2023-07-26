@@ -8,8 +8,8 @@ import clsx from 'clsx'
 const right = (
   <div style={{ fontSize: 24 }}>
     <Space style={{ '--gap': '16px' }}>
-      <SearchOutline />
-      <MoreOutline />
+      <SearchOutline fontSize={18} />
+      <MoreOutline fontSize={18} />
     </Space>
   </div>
 )
@@ -43,6 +43,14 @@ const StyledPage = styled.div`
     display: flex;
   }
 `
+const StyledNavbarContainer = styled.div`
+  .adm-nav-bar-back-arrow {
+    font-size: 14px;
+  }
+  .adm-nav-bar-title {
+    font-size: 16px;
+  }
+`
 
 const Category = () => {
   const navigate = useNavigate()
@@ -50,9 +58,11 @@ const Category = () => {
 
   return (
     <StyledContainer>
-      <NavBar back right={right} onBack={() => navigate('/')}>
-        分类
-      </NavBar>
+      <StyledNavbarContainer>
+        <NavBar back right={right} onBack={() => navigate('/')}>
+          分类
+        </NavBar>
+      </StyledNavbarContainer>
       <Grid columns={3}>
         <Grid.Item>
           <SideBar activeKey={activeKey} onChange={setActiveKey}>
