@@ -1,10 +1,3 @@
-import {
-  AppOutline,
-  MessageOutline,
-  UnorderedListOutline,
-  SmileOutline,
-} from 'antd-mobile-icons'
-
 const bottomTab = [
   {
     key: '/',

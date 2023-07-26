@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { phoneReg, verifyCodeReg } from '../constants'
-import { NavBar, Toast, SpinLoading, NoticeBar, Modal } from "antd-mobile"
+import { NavBar, Toast, SpinLoading, NoticeBar } from "antd-mobile"
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
 import { useState, useEffect } from "react"

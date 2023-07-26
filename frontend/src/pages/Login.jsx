@@ -71,7 +71,7 @@ const Login = () => {
   return (
     <>
       <NavBar 
-        backArrow={<CloseOutline fontSize={14} />} 
+        backArrow={<CloseOutline fontSize={14} onClick={() => navigate('/')} />} 
         right="幫助" 
         style={{ fontSize: '14px' }}
       ></NavBar>

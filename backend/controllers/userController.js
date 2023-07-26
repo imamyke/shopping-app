@@ -24,20 +24,6 @@ const userController = {
       throw new Error('无效的手机号')
     }
   }),
-  getUserProfile: asyncHandler (async (req, res) => {
-    const user = await User.findById(req.user._id)
-    if (user) {
-      res.json({
-        _id: user._id,
-        name: user.name,
-        phone: user.phone,
-        isAdmin: user.isAdmin
-      })
-    } else {
-      res.status(404)
-      throw new Error('此手机号还未注册')
-    }
-  }),
   signupUser: asyncHandler (async (req, res) => {
     const { phone, verifyCode } = req.body
     if (verifyCode !== 123456) {
@@ -46,7 +32,7 @@ const userController = {
     }
     
     const userExist = await User.findOne({ phone })
-
+    
     if (userExist) {
       res.status(400)
       throw new Error('此手機號已經被註冊')
@@ -68,7 +54,7 @@ const userController = {
   }),
   getVerifyCode: asyncHandler (async (req, res) => {
     const { phone } = req.body
-
+    
     if (phone) {
       res.status(201).json({
         code: 123456,
@@ -80,7 +66,45 @@ const userController = {
       res.status(400)
       throw new Error('Invalid user data')
     }
-  })
+  }),
+  getUserProfile: asyncHandler (async (req, res) => {
+    const user = await User.findById(req.user._id)
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        accountName: user.accountName,
+        phone: user.phone,
+        isAdmin: user.isAdmin
+      })
+    } else {
+      res.status(404)
+      throw new Error('此手机号还未注册')
+    }
+  }),
+  updateUserProfile: asyncHandler (async (req, res) => {
+    const userId = req.user._id
+    const user = await User.findById(userId)
+    if (user) {
+      user.name = req.body.name || user.name
+      user.accountName = req.body.accountName || user.accountName
+      if (req.body.phone) {
+        user.phone = req.body.phone
+      }
+      const updateUser = await user.save()
+      res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        accountName: updateUser.accountName,
+        phone: updateUser.phone,
+        isAdmin: updateUser.isAdmin,
+        token: generateToken(updateUser._id)
+      })
+    } else {
+      res.status(404)
+      throw new Error('User not found')
+    }
+  }),
 }
 
 module.exports = userController
