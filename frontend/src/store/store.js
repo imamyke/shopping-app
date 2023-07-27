@@ -2,7 +2,12 @@ import {combineReducers, legacy_createStore as createStore, applyMiddleware} fro
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
-import { userLoginReducer, userSignupReducer } from './reducers'
+import { 
+  userLoginReducer, 
+  userSignupReducer, 
+  userDetailReducer, 
+  userUpdateProfileReducer 
+} from './reducers'
 
 // initialState
 const UserInfoStorage = JSON.parse(localStorage.getItem('userInfo')) || null
@@ -13,7 +18,9 @@ const initialState = {
 // reducer
 const reducer = combineReducers({
   userLogin: userLoginReducer,
-  userSignup: userSignupReducer
+  userSignup: userSignupReducer,
+  userDetail: userDetailReducer,
+  userUpdate: userUpdateProfileReducer
 })
 
 // enhancer

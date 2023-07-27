@@ -1,3 +1,3 @@
-import { userLoginReducer, userSignupReducer } from "./userReducer";
+import { userLoginReducer, userSignupReducer, userDetailReducer, userUpdateProfileReducer } from "./userReducer";
 
-export { userLoginReducer, userSignupReducer }
+export { userLoginReducer, userSignupReducer, userDetailReducer, userUpdateProfileReducer }
