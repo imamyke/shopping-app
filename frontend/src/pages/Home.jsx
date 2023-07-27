@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useRef } from 'react'
 import { BottomTabBar, TopTabBar } from '../components'
 import { bottomTab, topTab } from '../constants'
+import homeScreen from '../components/homeScreen'
 
 
 const Home = () => {
@@ -18,7 +19,7 @@ const Home = () => {
     <>
       <TopTabBar
         swiperRef={swiperRef}
-        swiperTab={topTab}
+        swiperTab={homeScreen}
         tabName={topTab}
         activeIndex={activeIndex}
         setActiveIndex={setActiveIndex}

@@ -1,4 +1,4 @@
-import { Home, Video, Category, Cart, About, Login, Signup, Logout } from '../pages'
+import { Home, Video, Category, Cart, About, Login, Signup, Logout, Profile } from '../pages'
 
 const routes = [
   {
@@ -32,6 +32,10 @@ const routes = [
   {
     path: '/logout',
     element: <Logout />
+  },
+  {
+    path: '/profile',
+    element: <Profile />
   },
 ]
 

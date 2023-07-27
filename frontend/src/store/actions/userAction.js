@@ -134,7 +134,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       payload: data 
     })
     dispatch({
-      tupe: USER_LOGIN_SUCCESS,
+      type: USER_LOGIN_SUCCESS,
       payload: data
     })
     localStorage.setItem('userInfo', JSON.stringify(data))

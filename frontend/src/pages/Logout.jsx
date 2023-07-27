@@ -1,8 +1,7 @@
 import avatar from '../assets/images/avatar.jpeg'
-import { NavBar, Button } from "antd-mobile"
+import { NavBar, Button, Image, List } from "antd-mobile"
 import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
-import { Image, List } from 'antd-mobile'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../store/actions'
 
