@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Grid } from 'antd-mobile'
 
-const ProductCard = ({ imageUrl, title, price, sale }) => {
+const ProductCard = ({ imageUrl, name, price, sale }) => {
   return (
     <StyledProductCard imageUrl={imageUrl}>
       <Grid columns={3}>
@@ -13,7 +13,7 @@ const ProductCard = ({ imageUrl, title, price, sale }) => {
         <Grid.Item span={2}>
           <div className="card-content">
             <p className="card-title">
-              {title}
+              {name}
             </p>
             <div className="card-price">
               $<span className="price">{price}</span>

@@ -1,4 +1,15 @@
-import { Home, Video, Category, Cart, About, Login, Signup, Logout, Profile } from '../pages'
+import { 
+  Home, 
+  Video, 
+  Category, 
+  Cart, 
+  About, 
+  Login, 
+  Signup, 
+  Logout, 
+  Profile,
+  ProductDetail 
+} from '../pages'
 
 const routes = [
   {
@@ -36,6 +47,10 @@ const routes = [
   {
     path: '/profile',
     element: <Profile />
+  },
+  {
+    path: '/product/:id',
+    element: <ProductDetail />
   },
 ]
 

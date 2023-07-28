@@ -1,4 +1,4 @@
-export const products = [
+const products = [
     { 
       name:"中国乔丹板鞋2023夏季新款厚底鞋子低帮革面休闲鞋运动鞋撞色女鞋", 
       image: "https://gw.alicdn.com/bao/uploaded/i3/458694874/O1CN01fWrsoL1lsLHcymAqg_!!458694874.jpg_300x300q90.jpg_.webp",
@@ -128,3 +128,4 @@ export const products = [
     }
 ]
 
+module.exports = products

@@ -7,5 +7,17 @@ import Login from "./Login";
 import Signup from "./Signup"
 import Logout from "./Logout"
 import Profile from "./Profile";
+import ProductDetail from './ProductDetail'
 
-export { Home, Video, Category, Cart, About, Login, Signup, Logout, Profile }
+export { 
+  Home,
+  ProductDetail, 
+  Video, 
+  Category, 
+  Cart, 
+  About, 
+  Login, 
+  Signup, 
+  Logout, 
+  Profile 
+}
