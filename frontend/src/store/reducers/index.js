@@ -1,3 +1,20 @@
-import { userLoginReducer, userSignupReducer, userDetailReducer, userUpdateProfileReducer } from "./userReducer";
+import { 
+  userLoginReducer, 
+  userSignupReducer, 
+  userDetailReducer, 
+  userUpdateProfileReducer 
+} from "./userReducer";
 
-export { userLoginReducer, userSignupReducer, userDetailReducer, userUpdateProfileReducer }
+import {
+  productListReducer,
+  productDetailReducer
+} from "./productReducer"
+
+export { 
+  userLoginReducer, 
+  userSignupReducer, 
+  userDetailReducer, 
+  userUpdateProfileReducer,
+  productListReducer,
+  productDetailReducer 
+}
