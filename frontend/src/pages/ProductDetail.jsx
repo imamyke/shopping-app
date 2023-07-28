@@ -1,54 +1,32 @@
 import styled from "styled-components"
-import { TabBar } from "antd-mobile"
+import { TabBar, Button, ActionSheet, Stepper } from "antd-mobile"
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { productDetailAction } from "../store/actions"
-import { useEffect } from "react"
+import { productDetailAction, addToCartAction } from "../store/actions"
+import { useEffect, useState } from "react"
 import { Loader, DefaultNavbar } from '../components'
-
-
-
 
 const ProductDetail = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const params = useParams()
   const { id } = params
-  const dispatch = useDispatch()
+  const [visible, setVisible] = useState(false)
+  const [quantity, setQuantity] = useState(1)
   const results = useSelector(state => state.productDetail)
   const { loading, product } = results
+  const cart = useSelector(state => state.cart)
+  const { cartItems } = cart
+  console.log(cartItems);
 
+  // 導入產品資訊
   useEffect(() => {
     dispatch(productDetailAction(id))
   }, [dispatch, id])
-  
-  const AddButton = ({ onClick }) => {
-    return (
-      <StyledAddButton
-        onClick={() => onClick('/cart')}
-      >加入购物车
-      </StyledAddButton>
-    )
-  }
-  const GoToCartButton = ({ onClick }) => {
-    return (
-      <i 
-        class="fa-solid fa-bag-shopping"
-        onClick={() => navigate('/cart')}
-      ></i>
-    )
-  }
 
-  const bottomTabs = [
-    {
-      key: '/cart',
-      title: '购物车',
-      icon: <GoToCartButton />,
-    },
-    {
-      key: '/cart',
-      icon: <AddButton onClick={navigate} />,
-    },
-  ]
+  const handleAddToCart = (id, qty) => {
+    dispatch(addToCartAction(id, qty))
+  }
 
   return (
     <>
@@ -109,15 +87,22 @@ const ProductDetail = () => {
       
       </StyledDetailContainer>
       <StyledBottomTabBar>
-        <TabBar style={{ background: '#fff' }}>
-          {bottomTabs.map(item => (
-            <TabBar.Item 
-              key={item.key} 
-              icon={item.icon} 
-              title={item.title}
-            />
-          ))}
-        </TabBar>
+        <div className="item quantity-container">
+          <h1 className="title">
+          数量
+          </h1>
+          <div className="stepper">
+            <Stepper
+            defaultValue={1}
+            onChange={value => setQuantity(value)}
+          />
+          </div>
+        </div>
+        <div className="item cart-button">
+          <button
+            onClick={() => handleAddToCart(id, quantity)}
+          >加入购物车</button>
+        </div>
       </StyledBottomTabBar>
     </>
   )
@@ -129,7 +114,7 @@ const StyledDetailContainer = styled.div`
   background: #fff;
   padding: 10px;
   border-radius: 10px;
-  margin: 10px 10px 60px 10px;
+  margin: 10px 10px 110px 10px;
   h1 {
     font-size: 16px;
     font-weight: bold;
@@ -223,22 +208,38 @@ const StyledProductCard = styled.div`
     }
   }
 `
-const StyledAddButton = styled.button`
-  display: block;
-  border: 0;
-  padding: 6px 16px;
-  border-radius: 14px;
-  background: rgb(225, 37, 27);
-  color: #fff;
-`
 const StyledBottomTabBar = styled.div`
+  border: 1px solid #eee;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   background: #ffffff;
+  padding: 0 20px 0 20px;
+  border-radius: 20px 20px 0 0;
+  .item {
+    padding: 10px 0;
+  }
   .adm-tab-bar-item {
     color: #666;
+  }
+  .quantity-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+  .cart-button {
+    display: flex;
+    justify-content: center;
+    button {
+      border: 0;
+      display: block;
+      padding: 8px 50px;
+      border-radius: 28px;
+      background: rgb(225, 37, 27);
+      color: #fff;
+    }
   }
 `

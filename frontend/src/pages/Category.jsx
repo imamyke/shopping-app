@@ -3,7 +3,6 @@ import { SearchOutline, MoreOutline } from "antd-mobile-icons"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import styled from 'styled-components'
-import { DefaultNavbar } from "../components"
 import clsx from 'clsx'
 
 const right = (
@@ -33,25 +32,8 @@ const tabs = [
   },
 ]
 
-const StyledContainer = styled.div`
-  height: 100vh;
-  background-color: #ffffff;
-`
 
-const StyledPage = styled.div`
-  display: none;
-  &.active {
-    display: flex;
-  }
-`
-const StyledNavbarContainer = styled.div`
-  .adm-nav-bar-back-arrow {
-    font-size: 14px;
-  }
-  .adm-nav-bar-title {
-    font-size: 16px;
-  }
-`
+
 
 const Category = () => {
   const navigate = useNavigate()
@@ -99,3 +81,23 @@ const Category = () => {
 }
 
 export default Category
+
+const StyledContainer = styled.div`
+  height: 100vh;
+  background-color: #ffffff;
+`
+
+const StyledPage = styled.div`
+  display: none;
+  &.active {
+    display: flex;
+  }
+`
+const StyledNavbarContainer = styled.div`
+  .adm-nav-bar-back-arrow {
+    font-size: 14px;
+  }
+  .adm-nav-bar-title {
+    font-size: 16px;
+  }
+`

@@ -79,7 +79,7 @@ const userController = {
       })
     } else {
       res.status(404)
-      throw new Error('此手机号还未注册')
+      throw new Error('User not found')
     }
   }),
   updateUserProfile: asyncHandler (async (req, res) => {

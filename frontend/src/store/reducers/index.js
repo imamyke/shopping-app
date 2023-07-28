@@ -10,11 +10,17 @@ import {
   productDetailReducer
 } from "./productReducer"
 
+import {
+  cartReducer
+} from "./cartReducer"
+
+
 export { 
   userLoginReducer, 
   userSignupReducer, 
   userDetailReducer, 
   userUpdateProfileReducer,
   productListReducer,
-  productDetailReducer 
+  productDetailReducer,
+  cartReducer 
 }
