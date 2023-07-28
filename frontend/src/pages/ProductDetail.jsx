@@ -1,17 +1,15 @@
 import styled from "styled-components"
-import { TabBar, Button, ActionSheet, Stepper } from "antd-mobile"
-import { useNavigate, useParams } from 'react-router-dom'
+import { Stepper, Toast } from "antd-mobile"
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { productDetailAction, addToCartAction } from "../store/actions"
 import { useEffect, useState } from "react"
 import { Loader, DefaultNavbar } from '../components'
 
 const ProductDetail = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const params = useParams()
   const { id } = params
-  const [visible, setVisible] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const results = useSelector(state => state.productDetail)
   const { loading, product } = results
@@ -26,6 +24,9 @@ const ProductDetail = () => {
 
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
+    Toast.show({
+      content: '已加入购物车',
+    })
   }
 
   return (
@@ -223,6 +224,9 @@ const StyledBottomTabBar = styled.div`
   }
   .adm-tab-bar-item {
     color: #666;
+  }
+  .adm-button-fill-none {
+    color: rgb(225, 37, 27);
   }
   .quantity-container {
     display: flex;
