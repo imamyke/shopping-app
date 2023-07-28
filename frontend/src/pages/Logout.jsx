@@ -1,9 +1,10 @@
-import avatar from '../assets/images/avatar.jpeg'
-import { NavBar, Button, Image, List } from "antd-mobile"
-import { useNavigate } from 'react-router-dom'
 import styled from "styled-components"
+import avatar from '../assets/images/avatar.jpeg'
+import { Button, Image, List } from "antd-mobile"
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../store/actions'
+import { DefaultNavbar } from "../components"
 
 // 18681547948
 const Logout = () => {
@@ -17,9 +18,7 @@ const Logout = () => {
 
   return (
     <>
-      <StyledNavbarContainer>
-        <NavBar onBack={() => navigate('/')}>帐户设置</NavBar>
-      </StyledNavbarContainer>
+    <DefaultNavbar back="/" title="帐户设置" />
       <StyledList>
         <List mode='card'>
           <List.Item
@@ -51,15 +50,9 @@ const Logout = () => {
 
 export default Logout
 
-const StyledNavbarContainer = styled.div`
-  .adm-nav-bar-back-arrow {
-    font-size: 14px;
-  }
-  .adm-nav-bar-title {
-    font-size: 16px;
-  }
-`
 const StyledList = styled.div`
+  margin-top: 45px;
+  background: #fff;
   .adm-list-item-content {
     border-top: 0;
   }

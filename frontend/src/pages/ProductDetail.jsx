@@ -1,73 +1,58 @@
-import { NavBar, Grid } from "antd-mobile"
 import styled from "styled-components"
+import { TabBar } from "antd-mobile"
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { productDetailAction } from "../store/actions"
 import { useEffect } from "react"
-import { TabBar } from 'antd-mobile'
-import { Loader } from '../components'
+import { Loader, DefaultNavbar } from '../components'
 
 
-const AddButton = () => {
-  return (
-    <StyledAddButton>加入购物车</StyledAddButton>
-  )
-}
 
-const StyledAddButton = styled.button`
-  display: block;
-  border: 0;
-  padding: 6px 16px;
-  border-radius: 14px;
-  background: rgb(225, 37, 27);
-  color: #fff;
-`
-
-const StyledBottomTabBar = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: #ffffff;
-  .adm-tab-bar-item {
-    color: #453C41;
-  }
-  .adm-tab-bar-item-active {
-    color: #fb5d5a;
-    font-weight: bold;
-  }
-`
 
 const ProductDetail = () => {
-  const tabs = [
-    {
-      key: 'cart',
-      title: '购物车',
-      icon: <i class="fa-solid fa-bag-shopping"></i>,
-      handleClick: ''
-    },
-    {
-      key: 'addCart',
-      icon: <AddButton />,
-      handleClick: () => navigate('/cart')
-    },
-  ]
   const navigate = useNavigate()
   const params = useParams()
   const { id } = params
   const dispatch = useDispatch()
   const results = useSelector(state => state.productDetail)
-  const { loading, product, error } = results
+  const { loading, product } = results
+
   useEffect(() => {
     dispatch(productDetailAction(id))
   }, [dispatch, id])
+  
+  const AddButton = ({ onClick }) => {
+    return (
+      <StyledAddButton
+        onClick={() => onClick('/cart')}
+      >加入购物车
+      </StyledAddButton>
+    )
+  }
+  const GoToCartButton = ({ onClick }) => {
+    return (
+      <i 
+        class="fa-solid fa-bag-shopping"
+        onClick={() => navigate('/cart')}
+      ></i>
+    )
+  }
+
+  const bottomTabs = [
+    {
+      key: '/cart',
+      title: '购物车',
+      icon: <GoToCartButton />,
+    },
+    {
+      key: '/cart',
+      icon: <AddButton onClick={navigate} />,
+    },
+  ]
 
   return (
     <>
-      <StyledNavbarContainer>
-        <NavBar onBack={() => navigate('/')}>产品详情</NavBar>
-      </StyledNavbarContainer>
+      <DefaultNavbar back="/" title="产品详情" />
       { loading && <Loader /> }
       <StyledProductCard
         image={`${product.image}`}
@@ -125,12 +110,11 @@ const ProductDetail = () => {
       </StyledDetailContainer>
       <StyledBottomTabBar>
         <TabBar style={{ background: '#fff' }}>
-          {tabs.map(item => (
+          {bottomTabs.map(item => (
             <TabBar.Item 
               key={item.key} 
               icon={item.icon} 
               title={item.title}
-              onClick={item.handleClick}
             />
           ))}
         </TabBar>
@@ -138,8 +122,6 @@ const ProductDetail = () => {
     </>
   )
 }
-
-
 
 export default ProductDetail
 
@@ -181,25 +163,9 @@ const StyledDetailContainer = styled.div`
       border-collapse: collapse;
     }
   }
-  
-`
-
-const StyledNavbarContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background: #fff;
-  .adm-nav-bar-back-arrow {
-    font-size: 14px;
-  }
-  .adm-nav-bar-title {
-    font-size: 16px;
-  }
 `
 const StyledProductCard = styled.div`
-margin-top: 45px;
+  margin-top: 45px;
   overflow: hidden;
   background-color: #fff;
   .image-container {
@@ -255,5 +221,24 @@ margin-top: 45px;
         margin-top: 6px;
       }
     }
+  }
+`
+const StyledAddButton = styled.button`
+  display: block;
+  border: 0;
+  padding: 6px 16px;
+  border-radius: 14px;
+  background: rgb(225, 37, 27);
+  color: #fff;
+`
+const StyledBottomTabBar = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #ffffff;
+  .adm-tab-bar-item {
+    color: #666;
   }
 `

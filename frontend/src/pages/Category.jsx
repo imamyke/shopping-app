@@ -3,6 +3,7 @@ import { SearchOutline, MoreOutline } from "antd-mobile-icons"
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import styled from 'styled-components'
+import { DefaultNavbar } from "../components"
 import clsx from 'clsx'
 
 const right = (

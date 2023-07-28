@@ -2,10 +2,12 @@ import BottomTabBar from "./BottomTabBar";
 import TopTabBar from "./TopTabBar";
 import ProductCard from "./ProductCard";
 import Loader from "./Loader";
+import DefaultNavbar from "./DefaultNavbar"
 
 export { 
   BottomTabBar, 
   TopTabBar, 
   ProductCard,
-  Loader
+  Loader,
+  DefaultNavbar
 }
