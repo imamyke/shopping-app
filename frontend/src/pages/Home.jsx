@@ -7,7 +7,7 @@ import homeScreen from '../components/homeScreen'
 
 const Home = () => {
   const { pathname } = useLocation()
-  const handleNavigate = useNavigate()
+  const navigate = useNavigate()
   const swiperRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const handleChange = (key) => {
@@ -28,7 +28,7 @@ const Home = () => {
       <BottomTabBar 
         tabName={bottomTab} 
         pathname={pathname} 
-        onChange={handleNavigate}
+        onChange={navigate}
       />
     </>
   )

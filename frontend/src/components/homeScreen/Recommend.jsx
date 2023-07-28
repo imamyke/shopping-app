@@ -1,9 +1,9 @@
 import ProductCard from "../ProductCard"
-import { Link } from "react-router-dom"
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { productListAction } from "../../store/actions"
 import { useEffect } from "react"
-
+import { Loader } from '../../components'
 
 const Recommend = () => {
   const dispatch = useDispatch()
@@ -15,19 +15,25 @@ const Recommend = () => {
   },[dispatch])
 
   return (
-    <>
+    <StyledContainer>
+      { loading && <Loader /> }
       {productList.map(product => (
         <ProductCard
           href={`/product/${product._id}`}
           key={product.name}
-          imageUrl={product.image}
+          image={product.image}
           name={product.name} 
           price={product.price}
           sale={product.sale}
+          url={`/product/${product._id}`}
         />
       ))}
-    </>
+    </StyledContainer>
   )
 }
 
 export default Recommend
+
+const StyledContainer = styled.div`
+  margin-bottom: 65px;
+`

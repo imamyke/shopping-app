@@ -1,9 +1,16 @@
 import styled from 'styled-components'
 import { Grid } from 'antd-mobile'
+import { useNavigate } from 'react-router-dom'
 
-const ProductCard = ({ imageUrl, name, price, sale }) => {
+
+const ProductCard = ({ image, name, price, sale, url }) => {
+  const navigate = useNavigate()
+
   return (
-    <StyledProductCard imageUrl={imageUrl}>
+    <StyledProductCard 
+      image={image}
+      onClick={() => navigate(`${url}`)}
+    >
       <Grid columns={3}>
         <Grid.Item span={1}>
           <div className='image-container'>
@@ -47,7 +54,7 @@ const StyledProductCard = styled.a`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: ${props => `url(${props.imageUrl})`};
+    background-image: ${props => `url(${props.image})`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

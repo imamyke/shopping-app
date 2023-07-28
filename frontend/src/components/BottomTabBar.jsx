@@ -7,7 +7,7 @@ const StyledBottomTabBar = styled.div`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #f3f0f0;
+  background: #ffffff;
   .adm-tab-bar-item {
     color: #453C41;
   }

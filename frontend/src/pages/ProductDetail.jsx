@@ -1,53 +1,196 @@
 import { NavBar, Grid } from "antd-mobile"
 import styled from "styled-components"
-import { useNavigate } from 'react-router-dom'
-import { products } from "../data/products"
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { productDetailAction } from "../store/actions"
+import { useEffect } from "react"
+import { TabBar } from 'antd-mobile'
+import { Loader } from '../components'
 
-const ProductParameter = ({ id, products }) => {
-  const product = products.filter(product => product._id === id)
-    product.map(item => (
-      <Grid columns={2} key={item.name}>
-        <Grid.Item style={{ border: '1px solid #000', height: '20px' }}>{item.name}</Grid.Item>
-        <Grid.Item style={{ border: '1px solid #000' }}>{item.value}</Grid.Item>
-      </Grid>
-    )
+
+const AddButton = () => {
+  return (
+    <StyledAddButton>加入购物车</StyledAddButton>
   )
 }
 
+const StyledAddButton = styled.button`
+  display: block;
+  border: 0;
+  padding: 6px 16px;
+  border-radius: 14px;
+  background: rgb(225, 37, 27);
+  color: #fff;
+`
+
+const StyledBottomTabBar = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #ffffff;
+  .adm-tab-bar-item {
+    color: #453C41;
+  }
+  .adm-tab-bar-item-active {
+    color: #fb5d5a;
+    font-weight: bold;
+  }
+`
+
 const ProductDetail = () => {
+  const tabs = [
+    {
+      key: 'cart',
+      title: '购物车',
+      icon: <i class="fa-solid fa-bag-shopping"></i>,
+      handleClick: ''
+    },
+    {
+      key: 'addCart',
+      icon: <AddButton />,
+      handleClick: () => navigate('/cart')
+    },
+  ]
   const navigate = useNavigate()
+  const params = useParams()
+  const { id } = params
+  const dispatch = useDispatch()
+  const results = useSelector(state => state.productDetail)
+  const { loading, product, error } = results
+  useEffect(() => {
+    dispatch(productDetailAction(id))
+  }, [dispatch, id])
 
   return (
     <>
       <StyledNavbarContainer>
         <NavBar onBack={() => navigate('/')}>产品详情</NavBar>
       </StyledNavbarContainer>
+      { loading && <Loader /> }
       <StyledProductCard
-        imageUrl="https://gw.alicdn.com/bao/uploaded/i1/2206356409838/O1CN01Tkt7j22MXrIlnIxXc_!!2206356409838.jpg_300x300q90.jpg_.webp"
+        image={`${product.image}`}
       >
         <div className='image-container'>
           <div className="image"></div>
         </div>
       </StyledProductCard>
       <StyledDetailContainer>
+        <div className="product-price">
+          ￥<span className="price">{product.price}</span>
+        </div>
+        <h1 className="product-name">{product.name}</h1>
+
         <h1>规格参数</h1>
-        {/* <ProductParameter id products /> */}
-        
+          <table>
+            { product.brand && (
+              <tr>
+                <th>品牌</th>
+                <td>{product.brand}</td>
+              </tr>
+            ) }
+            { product.typeNum && (
+              <tr>
+                <th>型号</th>
+                <td>{product.typeNum}</td>
+              </tr>
+            ) }
+            { product.scale && (
+              <tr>
+                <th>规格</th>
+                <td>{product.scale}</td>
+              </tr>
+            ) }
+            { product.color && (
+              <tr>
+                <th>颜色样式</th>
+                <td>{product.color}</td>
+              </tr>
+            ) }
+            { product.style && (
+              <tr>
+                <th>款式</th>
+                <td>{product.style}</td>
+              </tr>
+            ) }
+            { product.materiel && (
+              <tr>
+                <th>材质</th>
+                <td>{product.materiel}</td>
+              </tr>
+            ) }
+          </table>
+      
       </StyledDetailContainer>
+      <StyledBottomTabBar>
+        <TabBar style={{ background: '#fff' }}>
+          {tabs.map(item => (
+            <TabBar.Item 
+              key={item.key} 
+              icon={item.icon} 
+              title={item.title}
+              onClick={item.handleClick}
+            />
+          ))}
+        </TabBar>
+      </StyledBottomTabBar>
     </>
   )
 }
 
+
+
 export default ProductDetail
 
-const StyledDetailContainer = styled.ul`
-  padding: 16px;
+const StyledDetailContainer = styled.div`
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px 10px 60px 10px;
   h1 {
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
   }
+  .product-name {
+    line-height: 20px;
+  }
+  .product-price {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: rgb(225, 37, 27);
+    .price {
+      font-size: 24px;
+    }
+  }
+  table {
+    width: 100%;
+    border: 1px solid #aaa;
+    th, td {
+      border: 1px solid #aaa;
+      line-height: 20px;
+      padding: 0 4px;
+      font-size: 14px;
+    }
+    th {
+      font-weight: bold;
+      color: #aaa;
+    }
+    td {
+      border-collapse: collapse;
+    }
+  }
+  
 `
 
 const StyledNavbarContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: #fff;
   .adm-nav-bar-back-arrow {
     font-size: 14px;
   }
@@ -56,6 +199,7 @@ const StyledNavbarContainer = styled.div`
   }
 `
 const StyledProductCard = styled.div`
+margin-top: 45px;
   overflow: hidden;
   background-color: #fff;
   .image-container {
@@ -73,7 +217,7 @@ const StyledProductCard = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: ${props => `url(${props.imageUrl})`};
+    background-image: ${props => `url(${props.image})`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
