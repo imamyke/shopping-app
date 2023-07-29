@@ -15,12 +15,11 @@ const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
-  console.log(cartItems);
   const right = (
     <MoreOutline fontSize={20} />
   )
   const handleCheckout = () => {
-    navigate(`/login?redirect=shipping`)
+    navigate(`/login?redirect=fillorder`)
   }
   const handleRemoveFromCart = (id) => {
     dispatch(removeFromCartAction(id))
@@ -124,7 +123,7 @@ const StyledCheckout = styled.div`
 `
 const StyledCheckoutButton = styled.button`
   display: block;
-  background: #fb5d5a;
+  background: rgb(225, 37, 27);
   border: 0;
   color: #fff;
   padding: 6px 10px;

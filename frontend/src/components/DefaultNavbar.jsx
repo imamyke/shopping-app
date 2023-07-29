@@ -7,9 +7,9 @@ const DefaultNavbar = ({ back, title }) => {
   const navigate = useNavigate()
 
   return (
-      <StyledNavbarContainer>
-        <NavBar onBack={() => navigate(back)}>{title}</NavBar>
-      </StyledNavbarContainer>
+    <StyledNavbarContainer>
+      <NavBar onBack={() => navigate(back)}>{title}</NavBar>
+    </StyledNavbarContainer>
   )
 }
 

@@ -1,6 +1,11 @@
 import { login, logout, signup, getUserDetail, updateUserProfile } from "./userAction";
 import { productListAction, productDetailAction } from "./productAction"
-import { addToCartAction, removeFromCartAction } from "./cartAction";
+import { 
+  addToCartAction, 
+  removeFromCartAction,
+  saveShippingAddressAction,
+  savePaymentMethodsAction
+} from "./cartAction";
 
 export { 
   login, 
@@ -11,5 +16,7 @@ export {
   getUserDetail,
   updateUserProfile,
   addToCartAction,
-  removeFromCartAction
+  removeFromCartAction,
+  saveShippingAddressAction,
+  savePaymentMethodsAction
 }

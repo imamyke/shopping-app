@@ -15,9 +15,16 @@ import {
 // initialState
 const UserInfoStorage = JSON.parse(localStorage.getItem('userInfo')) || null
 const CartItemsFromStorage = JSON.parse(localStorage.getItem('cartItems')) || []
+const shippingAddressFromStorage = JSON.parse(localStorage.getItem('shippingAddress')) || {}
+const paymentMethodFromStorage = JSON.parse(localStorage.getItem('paymentMethod')) || {}
+
 const initialState = {
   userLogin: { userInfo: UserInfoStorage},
-  cart: { cartItems: CartItemsFromStorage }
+  cart: { 
+    cartItems: CartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+    paymentMethod: paymentMethodFromStorage 
+  }
 }
 
 // reducer
