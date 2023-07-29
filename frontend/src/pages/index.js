@@ -8,6 +8,7 @@ import Signup from "./Signup"
 import Logout from "./Logout"
 import Profile from "./Profile";
 import ProductDetail from './ProductDetail'
+import Shipping from './Shipping'
 
 export { 
   Home,
@@ -19,5 +20,6 @@ export {
   Login, 
   Signup, 
   Logout, 
-  Profile 
+  Profile,
+  Shipping 
 }

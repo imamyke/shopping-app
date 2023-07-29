@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { phoneReg, verifyCodeReg } from '../constants'
-import { NavBar, Footer, Toast, SpinLoading, NoticeBar } from "antd-mobile"
-import { CloseOutline } from "antd-mobile-icons"
-import { Link, useNavigate } from 'react-router-dom'
 import styled from "styled-components"
-import { loginTabs } from '../constants'
+import { phoneReg, verifyCodeReg, loginTabs } from '../constants'
+import { NavBar, Footer, Toast, SpinLoading, NoticeBar } from "antd-mobile"
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../store/actions'
@@ -19,6 +17,14 @@ const Login = () => {
   const { loading, error, userInfo } = userLogin
   const dispatch = useDispatch()
 
+  const { search } = useLocation()
+  const redirect = search ? `/${search.split('=')[1]}` : '/'
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect)
+    }
+  }, [userInfo, navigate, redirect])
+  
   const handleVerifyCode = async () => {
     const phone = phoneNumer
     if (phoneReg.test(phone)) {
@@ -48,7 +54,6 @@ const Login = () => {
     }
   }
 
-  // 18681547948
   const count = () => {
     let timer = null
     let sec = 60
@@ -62,16 +67,11 @@ const Login = () => {
     }, 1000)
   }
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/')
-    }
-  }, [userInfo, navigate])
-
   return (
-    <>
+    <StyledLoginPage>
       <NavBar 
-        backArrow={<CloseOutline fontSize={14} onClick={() => navigate('/')} />} 
+        backArrow
+        onBack={() => navigate('/')} 
         right="幫助" 
         style={{ fontSize: '14px' }}
       ></NavBar>
@@ -105,8 +105,7 @@ const Login = () => {
               >{time > 0 && `(${time})`}获取验证码</button>
             </div>
             <button type="submit" className="login-button">登录</button>
-            <Link to="/signup" className="signup-link">新用戶注册</Link>
-            
+            <Link to={redirect ? `/signup?redirect=${redirect}` : `/signup`} className="signup-link">新用戶注册</Link>
           </div>
           <div className='error'>
             { error && <NoticeBar color='alert' content={error} /> }
@@ -127,12 +126,17 @@ const Login = () => {
           </StyledLoginTabs>
         </StyledFooterContainer>
       </StyledLoginContainer>  
-    </>
+    </StyledLoginPage>
   )
 }
 
 export default Login
 
+const StyledLoginPage = styled.div`
+  .adm-nav-bar-back-arrow {
+    font-size: 14px;
+  }
+`
 
 const StyledLoginTabs = styled.div`
   display: flex; 

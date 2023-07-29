@@ -8,7 +8,8 @@ import {
   Signup, 
   Logout, 
   Profile,
-  ProductDetail 
+  ProductDetail,
+  Shipping 
 } from '../pages'
 
 const routes = [
@@ -51,6 +52,10 @@ const routes = [
   {
     path: '/product/:id',
     element: <ProductDetail />
+  },
+  {
+    path: '/shipping',
+    element: <Shipping />
   },
 ]
 

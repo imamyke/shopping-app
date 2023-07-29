@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { phoneReg, verifyCodeReg } from '../constants'
 import { NavBar, Toast, SpinLoading, NoticeBar } from "antd-mobile"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import styled from "styled-components"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
@@ -59,12 +59,12 @@ const Signup = () => {
       }
     }, 1000)
   }
-  
+
   useEffect(() => {
     if (userInfo) {
       navigate('/')
     }
-  }, [userInfo, navigate])
+  })
 
   console.log(userInfo, error);
   return (
@@ -122,7 +122,6 @@ const StyledNavbarContainer = styled.div`
     font-size: 14px;
   }
 `
-
 const StyledLoginContainer = styled.div`
   padding-top: 100px;
   h1 {
