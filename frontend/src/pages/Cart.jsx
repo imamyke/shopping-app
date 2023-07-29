@@ -5,13 +5,11 @@ import { BottomTabBar } from '../components'
 import { NavBar, Stepper, Grid, NoticeBar } from 'antd-mobile'
 import { MoreOutline } from 'antd-mobile-icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeFromCartAction } from '../store/actions/cartAction'
+import { removeFromCartAction, addToCartAction } from '../store/actions/cartAction'
 import { SmileOutline } from 'antd-mobile-icons'
 
-import avatar from '../assets/images/avatar.jpeg'
 
 const Cart = () => {
-  const { id } = useParams()
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -26,6 +24,9 @@ const Cart = () => {
   }
   const handleRemoveFromCart = (id) => {
     dispatch(removeFromCartAction(id))
+  }
+  const handleAddToCart = (id, qty) => {
+    dispatch(addToCartAction(id, qty))
   }
   
   return (
@@ -66,9 +67,7 @@ const Cart = () => {
                     <div>
                       <Stepper
                         defaultValue={item.qty}
-                        onChange={value => {
-                          console.log(value)
-                        }}
+                        onChange={value => handleAddToCart(item.product, value)}
                       />
                     </div>
                   </div>
