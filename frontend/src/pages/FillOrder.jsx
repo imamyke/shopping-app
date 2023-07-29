@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import clsx from 'clsx'
 import { DefaultNavbar } from '../components'
-import { useState, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from 'react-router-dom'
 import { Toast, Grid, Stepper, Tag } from "antd-mobile"
 import { EditSFill } from 'antd-mobile-icons'
@@ -9,24 +9,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   addToCartAction, 
   savePaymentMethodsAction,
-  saveShippingAddressAction 
+  saveShippingAddressAction,
+  createOrderAction 
 } from "../store/actions"
+import { ORDER_CREATE_RESET } from '../store/types/orderConstants'
 
 const FillOrder = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const inputRef = useRef(null)
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
   const cart = useSelector(state => state.cart)
   const { cartItems, shippingAddress, paymentMethod: payment } = cart
-  console.log(cartItems);
-  console.log(shippingAddress);
-  console.log(payment);
+
   const [paymentMethod, setPaymentMethod] = useState(payment)
   const [name, setName] = useState(shippingAddress.name)
   const [phone, setPhone] = useState(shippingAddress.phone)
   const [address, setAddress] = useState(shippingAddress.address)
   const [edit, setEdit] = useState(false)
-
   const handleSubmitOrder = () => {
     if (!name || !phone || !address) {
       navigate('/fillorder')
@@ -35,15 +37,41 @@ const FillOrder = () => {
         duration:'2000'
       })
       return
+    } else if (!Object.keys(paymentMethod).length){
+      Toast.show({
+        content: '请输入支付方式',
+        duration:'2000'
+      })
+    } else {
+      // 總價: 
+      cart.totalPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+      
+      dispatch(createOrderAction({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        totalPrice: cart.totalPrice
+      }))
     }
-    dispatch(savePaymentMethodsAction(paymentMethod))
-    dispatch(saveShippingAddressAction({ name, phone, address }))
-    navigate('/order')
   }
+
 
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
   }
+  useEffect(() => {
+    dispatch(savePaymentMethodsAction(paymentMethod))
+    dispatch(saveShippingAddressAction({ name, phone, address }))
+  }, [ dispatch, paymentMethod, name, phone, address ])
+
+  const orderCreate = useSelector((state) => state.orderCreate)
+  const { order, success, error } = orderCreate
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`)
+      dispatch({ type: ORDER_CREATE_RESET })
+    }
+  }, [navigate, dispatch, success, order])
   
   return (
     <>

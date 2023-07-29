@@ -6,6 +6,9 @@ import {
   saveShippingAddressAction,
   savePaymentMethodsAction
 } from "./cartAction";
+import {
+  createOrderAction
+} from "./orderAction"
 
 export { 
   login, 
@@ -18,5 +21,6 @@ export {
   addToCartAction,
   removeFromCartAction,
   saveShippingAddressAction,
-  savePaymentMethodsAction
+  savePaymentMethodsAction,
+  createOrderAction
 }

@@ -7,7 +7,6 @@ const orderController = {
       orderItems,
       shippingAddress,
       paymentMethod,
-      itemsPrice,
       totalPrice
     } = req.body
   
@@ -16,11 +15,10 @@ const orderController = {
       throw new Error('No order items')
     } else {
       const order = new Order({
-        orderItems,
         user: req.user._id,
+        orderItems,
         shippingAddress,
         paymentMethod,
-        itemsPrice,
         totalPrice
       })
       const createdOrder = await order.save()
