@@ -54,7 +54,7 @@ export const getOrderDetailAction = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`
       }
     }
-    const { data } = await axios.post(`/api/orders/${id}`, config)
+    const { data } = await axios.get(`/api/orders/${id}`, config)
 
     // 提交給前端取用 data
     dispatch({ type: ORDER_DETAIL_SUCCESS, payload: data })

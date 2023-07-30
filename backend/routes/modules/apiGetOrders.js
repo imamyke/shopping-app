@@ -5,5 +5,6 @@ const { authMiddleware } = require('../../middlewares/authMiddleware')
 
 router.post('/', authMiddleware, orderController.addOrderItems)
 router.get('/:id', authMiddleware, orderController.addOrderItemById)
+router.put('/:id/pay', authMiddleware, orderController.updateOrderToPay)
 
 module.exports = router

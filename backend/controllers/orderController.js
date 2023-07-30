@@ -33,6 +33,25 @@ const orderController = {
       res.status(404)
       throw new Error('Order not Found')
     }
+  }),
+  updateOrderToPay: asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+    const { id, status, update_time, email_address } = req.body
+    if (order) {
+      order.isPaid = true
+      order.paidAt = Date.now()
+      order.paymentResult = {
+        id,
+        status,
+        update_time,
+        email_address
+      }
+      const updateOrder = await order.save()
+      res.json(updateOrder)
+    } else {
+      res.status(404)
+      throw new Error('Order not Found')
+    }
   })
   
 }
