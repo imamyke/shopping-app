@@ -15,7 +15,8 @@ import {
 } from "./cartReducer"
 
 import {
-  orderCreateReducer
+  orderCreateReducer,
+  orderDetailReducer
 } from "./orderReducer"
 
 export { 
@@ -26,5 +27,6 @@ export {
   productListReducer,
   productDetailReducer,
   cartReducer,
-  orderCreateReducer 
+  orderCreateReducer,
+  orderDetailReducer 
 }

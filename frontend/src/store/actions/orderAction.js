@@ -3,6 +3,9 @@ import {
   ORDER_CREATE_SUCCESS, 
   ORDER_CREATE_FAIL,
   ORDER_CREATE_RESET,
+  ORDER_DETAIL_REQUEST, 
+  ORDER_DETAIL_SUCCESS, 
+  ORDER_DETAIL_FAIL,
 } from "../types/orderConstants"
 import {
   CART_REMOVE_ITEMS
@@ -38,3 +41,32 @@ export const createOrderAction = (order) => async (dispatch, getState) => {
     })
   }
 }
+
+export const getOrderDetailAction = (id) => async (dispatch, getState) => {
+  try {
+    // 從 store 取出 user 的 token
+    dispatch({ type: ORDER_DETAIL_REQUEST })
+    const { userLogin: { userInfo } } = getState()
+    
+    // 向 後端請求 user 的 data
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+    const { data } = await axios.post(`/api/orders/${id}`, config)
+
+    // 提交給前端取用 data
+    dispatch({ type: ORDER_DETAIL_SUCCESS, payload: data })
+
+  } catch (error) {
+    dispatch({ 
+      type: ORDER_DETAIL_FAIL, 
+      payload: 
+        error.response && error.response.data.message 
+          ? error.response.data.message 
+          : error.response
+    })
+  }
+}
+
