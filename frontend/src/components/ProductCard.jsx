@@ -23,7 +23,7 @@ const ProductCard = ({ image, name, price, sale, url }) => {
               {name}
             </p>
             <div className="card-price">
-              $<span className="price">{price}</span>
+            ￥<span className="price">{price}</span>
               <span className="current-sale">近日已售{sale}+件</span>
             </div>
           </div>

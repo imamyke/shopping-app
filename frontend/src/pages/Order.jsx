@@ -25,6 +25,15 @@ const Order = () => {
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
   }
+  const phoneTransfer = (phone) => {
+    return phone.split('').map((item, idx) => {
+      if (idx > 2 && idx < 7) {
+        return '*'
+      } else {
+        return item
+      }
+    }).join('')
+  }
   
   useEffect(() => {
     if (!userInfo) {
@@ -37,8 +46,12 @@ const Order = () => {
     <>
       <DefaultNavbar back='/cart' title='订单详情' />
       <StyledBlock style={{ marginTop: '55px' }}>
-        <h1><i class="fa-regular fa-circle-user"></i> {}</h1>
-        
+        <h1>
+          <i class="fa-regular fa-circle-user" style={{ marginRight: '4px' }}></i> 
+          {order.shippingDetail.name}
+          <span className='order-phone'>{phoneTransfer(order.shippingDetail.phone)}</span>
+        </h1>
+        <span className='order-address'>地址: {order.shippingDetail.address}</span>
       </StyledBlock>
       <StyledOrderContainer>
         {order.orderItems.map(item => (
@@ -56,7 +69,7 @@ const Order = () => {
                 </p>
                 <div className="card-price">
                   <div>
-                  $<span className="price">{item.price}</span>
+                  ￥<span className="price">{item.price}</span>
                   </div>
                   <div className='quantity'>{item.qty}件</div>
                 </div>
@@ -72,27 +85,38 @@ const Order = () => {
           </Grid>
         </StyledProductCard>
         ))}
-      </StyledOrderContainer>
-      <StyledBlock>
-        <h1>支付方式</h1>
-        
-      </StyledBlock>
-      <StyledBottomTabBar>
-        <div className="item quantity-container">
-          <h1 className="price-container">
-            ￥
-            <span className="price">
-              {order.orderItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
-            </span>
-          </h1>
-          <div className="item cart-button">
+        <div className='detail-table'>
+          <table>
+            <tr>
+              <th>实付款</th>
+              <td>合計 ￥<span>{addDecimals(order.orderItems.reduce((acc, item) => acc + item.qty * item.price, 0))}</span></td>
+            </tr>
+            <tr>
+              <th>订单编号</th>
+              <td>{order._id}</td>
+            </tr>
+            <tr>
+              <th>支付方式</th>
+              <td>{order.paymentMethod}</td>
+            </tr>
+            <tr>
+              <th>下单时间</th>
+              <td>{order.createdAt.substring(0, 10)}</td>
+            </tr>
             
-          </div>
+          </table>
+        </div>
+      </StyledOrderContainer>
+      <StyledBottomTabBar>
+        <span>更多</span>
+        <div className="cart-button">
+          <button className='secondary'>发票服务</button>
+          <button className='secondary'>退换/售后</button>
+          <button className='primary'>再次购买</button>
         </div>
       </StyledBottomTabBar>
     </>
   ) 
-  
 }
 
 export default Order
@@ -102,6 +126,29 @@ const StyledOrderContainer = styled.div`
   padding: 10px;
   background: #fff;
   border-radius: 10px;
+  margin-bottom: 85px;
+  .detail-table {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  table {
+    width: 100%;
+    th, td {
+      line-height: 24px;
+      padding: 0 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    th {
+      text-align: left;
+      color: #888;
+    }
+    td {
+      text-align: right;
+      border-collapse: collapse;
+    }
+  }
+}
 `
 const StyledBlock = styled.div`
   margin: 10px 0;
@@ -109,9 +156,16 @@ const StyledBlock = styled.div`
   background: #fff;
   border-radius: 10px;
   h1 {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 10px;
+  }
+  .order-address {
+    color: #666;
+  }
+  .order-phone {
+    margin-left: 4px;
+    color: #666;
   }
 `
 const StyledBottomTabBar = styled.div`
@@ -122,38 +176,29 @@ const StyledBottomTabBar = styled.div`
   right: 0;
   z-index: 1000;
   background: #ffffff;
-  padding: 0 20px 0 20px;
+  padding: 20px;
   border-radius: 20px 20px 0 0;
-  .item {
-    padding: 10px 0;
-  }
-  .adm-tab-bar-item {
-    color: #666;
-  }
-  .price-container {
-    color: rgb(225, 37, 27);
-    font-weight: bold;
-    font-size: 10px;
-    .price {
-      font-size: 20px;
-    }
-  }
-  .quantity-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   .cart-button {
     display: flex;
     justify-content: center;
     button {
       border: 0;
       display: block;
-      padding: 8px 20px;
+      margin-left: 8px;
+      padding: 4px 10px;
       border-radius: 28px;
-      background: rgb(225, 37, 27);
-      color: #fff;
+      &.primary {
+        background: rgb(225, 37, 27);
+        color: #fff;
+      }
+      &.secondary {
+        border: 1px solid #aaa;
+        color: #000;
+        background: #fff;
+      }
     }
   }
 `
@@ -232,3 +277,6 @@ const StyledProductCard = styled.a`
     }
   }
 `
+
+
+  
