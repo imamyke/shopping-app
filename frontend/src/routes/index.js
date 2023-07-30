@@ -9,7 +9,8 @@ import {
   Logout, 
   Profile,
   ProductDetail,
-  FillOrder 
+  FillOrder,
+  Order 
 } from '../pages'
 
 const routes = [
@@ -56,6 +57,10 @@ const routes = [
   {
     path: '/fillorder',
     element: <FillOrder />
+  },
+  {
+    path: '/order/:id',
+    element: <Order />
   },
 ]
 

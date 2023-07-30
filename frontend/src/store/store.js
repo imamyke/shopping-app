@@ -19,14 +19,14 @@ import {
 // initialState
 const UserInfoStorage = JSON.parse(localStorage.getItem('userInfo')) || null
 const CartItemsFromStorage = JSON.parse(localStorage.getItem('cartItems')) || []
-const shippingAddressFromStorage = JSON.parse(localStorage.getItem('shippingAddress')) || {}
+const shippingDetailFromStorage = JSON.parse(localStorage.getItem('shippingDetail')) || {}
 const paymentMethodFromStorage = JSON.parse(localStorage.getItem('paymentMethod')) || {}
 
 const initialState = {
   userLogin: { userInfo: UserInfoStorage},
   cart: { 
     cartItems: CartItemsFromStorage,
-    shippingAddress: shippingAddressFromStorage,
+    shippingDetail: shippingDetailFromStorage,
     paymentMethod: paymentMethodFromStorage 
   }
 }

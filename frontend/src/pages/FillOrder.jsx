@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { 
   addToCartAction, 
   savePaymentMethodsAction,
-  saveShippingAddressAction,
+  saveShippingDetailAction,
   createOrderAction 
 } from "../store/actions"
 import { ORDER_CREATE_RESET } from '../store/types/orderConstants'
@@ -22,13 +22,16 @@ const FillOrder = () => {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
   const cart = useSelector(state => state.cart)
-  const { cartItems, shippingAddress, paymentMethod: payment } = cart
+  const { cartItems, shippingDetail, paymentMethod: payment } = cart
+  const orderCreate = useSelector((state) => state.orderCreate)
+  const { order, success, error } = orderCreate
 
   const [paymentMethod, setPaymentMethod] = useState(payment)
-  const [name, setName] = useState(shippingAddress.name)
-  const [phone, setPhone] = useState(shippingAddress.phone)
-  const [address, setAddress] = useState(shippingAddress.address)
+  const [name, setName] = useState(shippingDetail.name)
+  const [phone, setPhone] = useState(shippingDetail.phone)
+  const [address, setAddress] = useState(shippingDetail.address)
   const [edit, setEdit] = useState(false)
+
   const handleSubmitOrder = () => {
     if (!name || !phone || !address) {
       navigate('/fillorder')
@@ -42,30 +45,29 @@ const FillOrder = () => {
         content: '请输入支付方式',
         duration:'2000'
       })
+      return
     } else {
       // 總價: 
       cart.totalPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
       
       dispatch(createOrderAction({
         orderItems: cart.cartItems,
-        shippingAddress: cart.shippingAddress,
+        shippingDetail: cart.shippingDetail,
         paymentMethod: cart.paymentMethod,
         totalPrice: cart.totalPrice
       }))
     }
   }
 
-
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
   }
+
   useEffect(() => {
     dispatch(savePaymentMethodsAction(paymentMethod))
-    dispatch(saveShippingAddressAction({ name, phone, address }))
+    dispatch(saveShippingDetailAction({ name, phone, address }))
   }, [ dispatch, paymentMethod, name, phone, address ])
-
-  const orderCreate = useSelector((state) => state.orderCreate)
-  const { order, success, error } = orderCreate
+  
   useEffect(() => {
     if (success) {
       navigate(`/order/${order._id}`)
@@ -161,13 +163,13 @@ const FillOrder = () => {
             <label htmlFor="name">收货人</label>
             <span 
               className={clsx('', { inputBody: true, isEdit: edit })}
-            >{shippingAddress.name}</span>
+            >{shippingDetail.name}</span>
             <input 
               className={clsx('', { isEdit: edit })}
               ref={inputRef}
               id='name' type="text" 
               placeholder='请输入收货人' 
-              defaultValue={shippingAddress.name}
+              defaultValue={shippingDetail.name}
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -176,12 +178,12 @@ const FillOrder = () => {
             <label htmlFor="phone">手机号码</label>
             <span 
               className={clsx('', { inputBody: true, isEdit: edit })}
-            >{shippingAddress.phone}</span>
+            >{shippingDetail.phone}</span>
             <input id='phone' type="text" 
               className={clsx('', { isEdit: edit })}
               ref={inputRef}
               placeholder='请输入收货人手机号码'
-              defaultValue={shippingAddress.phone}
+              defaultValue={shippingDetail.phone}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
@@ -190,13 +192,13 @@ const FillOrder = () => {
             <label htmlFor="address">收货地址</label>
             <span 
               className={clsx('', { inputBody: true, isEdit: edit })}
-              >{shippingAddress.phone}</span>
+              >{shippingDetail.phone}</span>
             <input 
               className={clsx('', { isEdit: edit })}
               ref={inputRef}
               id='address' type="text" 
               placeholder='请输入收货地址'
-              defaultValue={shippingAddress.address}
+              defaultValue={shippingDetail.address}
               onChange={(e) => setAddress(e.target.value)}
               required
             />

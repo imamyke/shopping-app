@@ -9,6 +9,7 @@ import Logout from "./Logout"
 import Profile from "./Profile";
 import ProductDetail from './ProductDetail'
 import FillOrder from './FillOrder'
+import Order from './Order'
 
 export { 
   Home,
@@ -21,5 +22,6 @@ export {
   Signup, 
   Logout, 
   Profile,
-  FillOrder
+  FillOrder,
+  Order
 }

@@ -32,7 +32,7 @@ const orderSchema = new Schema({
       }
     }
   ],
-  shippingAddress: {
+  shippingDetail: {
     name: {
       type: String,
       required: true

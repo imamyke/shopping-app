@@ -3,7 +3,7 @@ import { productListAction, productDetailAction } from "./productAction"
 import { 
   addToCartAction, 
   removeFromCartAction,
-  saveShippingAddressAction,
+  saveShippingDetailAction,
   savePaymentMethodsAction
 } from "./cartAction";
 import {
@@ -21,7 +21,7 @@ export {
   updateUserProfile,
   addToCartAction,
   removeFromCartAction,
-  saveShippingAddressAction,
+  saveShippingDetailAction,
   savePaymentMethodsAction,
   createOrderAction,
   getOrderDetailAction

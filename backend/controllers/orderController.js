@@ -5,7 +5,7 @@ const orderController = {
   addOrderItems: asyncHandler(async (req, res) => {
     const {
       orderItems,
-      shippingAddress,
+      shippingDetail,
       paymentMethod,
       totalPrice
     } = req.body
@@ -17,7 +17,7 @@ const orderController = {
       const order = new Order({
         user: req.user._id,
         orderItems,
-        shippingAddress,
+        shippingDetail,
         paymentMethod,
         totalPrice
       })

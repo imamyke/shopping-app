@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import bottomTab from '../constants/bottomTab'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { BottomTabBar } from '../components'
-import { NavBar, Stepper, Grid, NoticeBar } from 'antd-mobile'
+import { NavBar, Stepper, Grid, NoticeBar, Toast } from 'antd-mobile'
 import { MoreOutline } from 'antd-mobile-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCartAction, addToCartAction } from '../store/actions/cartAction'
@@ -19,6 +19,13 @@ const Cart = () => {
     <MoreOutline fontSize={20} />
   )
   const handleCheckout = () => {
+    if (!cartItems.length) {
+      Toast.show({
+        content: '您的购物车是空的',
+        duration:'2000'
+      })
+      return
+    }
     navigate(`/login?redirect=fillorder`)
   }
   const handleRemoveFromCart = (id) => {
@@ -130,11 +137,10 @@ const StyledCheckoutButton = styled.button`
   border-radius: 16px;
   font-size: 12px;
 `
-const StyledProductCard = styled.a`
+const StyledProductCard = styled.div`
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-  display: block;
   background-color: #fff;
   margin: 0 10px 10px 10px;
   .image-container {
