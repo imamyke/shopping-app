@@ -2,14 +2,15 @@ import {
   ORDER_CREATE_REQUEST, 
   ORDER_CREATE_SUCCESS, 
   ORDER_CREATE_FAIL,
-  ORDER_CREATE_RESET,
   ORDER_DETAIL_REQUEST, 
   ORDER_DETAIL_SUCCESS, 
   ORDER_DETAIL_FAIL,
   ORDER_PAY_REQUEST, 
   ORDER_PAY_SUCCESS, 
   ORDER_PAY_FAIL,
-  ORDER_PAY_RESET,
+  ORDER_MY_LIST_REQUEST, 
+  ORDER_MY_LIST_SUCCESS, 
+  ORDER_MY_LIST_FAIL,
 } from "../types/orderConstants"
 import {
   CART_REMOVE_ITEMS
@@ -104,3 +105,30 @@ export const payOrderAction = (orderId, paymentResult) => async (dispatch, getSt
   }
 }
 
+export const myOrderListAction = () => async (dispatch, getState) => {
+  try {
+    // 從 store 取出 user 的 token
+    dispatch({ type: ORDER_MY_LIST_REQUEST })
+    const { userLogin: { userInfo } } = getState()
+    
+    // 向 後端請求 user 的 data
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      }
+    }
+    const { data } = await axios.get('/api/orders/myorders', config)
+
+    // 提交給前端取用 data
+    dispatch({ type: ORDER_MY_LIST_SUCCESS, payload: data })
+
+  } catch (error) {
+    dispatch({ 
+      type: ORDER_MY_LIST_FAIL, 
+      payload: 
+        error.response && error.response.data.message 
+          ? error.response.data.message 
+          : error.response
+    })
+  }
+}

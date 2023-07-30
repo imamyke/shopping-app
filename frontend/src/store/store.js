@@ -12,7 +12,8 @@ import {
   cartReducer,
   orderCreateReducer,
   orderDetailReducer,
-  orderPayReducer
+  orderPayReducer,
+  orderMyListReducer
 } from './reducers'
 
 // initialState
@@ -41,7 +42,8 @@ const reducer = combineReducers({
   cart: cartReducer,
   orderCreate: orderCreateReducer,
   orderDetail: orderDetailReducer,
-  orderPay: orderPayReducer
+  orderPay: orderPayReducer,
+  orderMyList: orderMyListReducer
 })
 
 // enhancer
