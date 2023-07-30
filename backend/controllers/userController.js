@@ -88,9 +88,8 @@ const userController = {
     if (user) {
       user.name = req.body.name || user.name
       user.accountName = req.body.accountName || user.accountName
-      if (req.body.phone) {
-        user.phone = req.body.phone
-      }
+      user.phone = req.body.phone || user.phone
+      
       const updateUser = await user.save()
       res.json({
         _id: updateUser._id,
