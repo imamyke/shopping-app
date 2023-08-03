@@ -10,6 +10,7 @@ const Home = () => {
   const navigate = useNavigate()
   const swiperRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
+
   const handleChange = (key) => {
   const index = topTab.findIndex(item => item.key === key)
     setActiveIndex(index)

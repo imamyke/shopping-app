@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { Tabs, Swiper } from 'antd-mobile'
-import { ScanningOutline, SetOutline } from 'antd-mobile-icons'
+import { SetOutline } from 'antd-mobile-icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Search } from "../components"
 
 // 之後 title要改children
 const swiperItemsGenerate = (tab) => {
@@ -22,15 +23,7 @@ const TopTabBar = ({ tabName, activeIndex, setActiveIndex, onChange, swiperRef, 
     <>
       <StyledTopBarHeader>
         <StyledTopBarContainer>
-          <StyledSearchBar>
-            <div className='searchbar-scanning-logo'>
-              <ScanningOutline fontSize={24} />
-            </div>
-            <input type="text" placeholder='请搜寻喜欢的宝贝' />
-            <div className='searchbar-button'>
-              <button type='button'>搜索</button>
-            </div>
-          </StyledSearchBar>
+          <Search />
           <StyledLoginIcon>
             { userInfo ? (
               <SetOutline 
@@ -124,42 +117,6 @@ const StyledTopBarHeader = styled.header`
   .adm-tabs-header {
     border-bottom: 0;
   }
-`
-const StyledSearchBar = styled.div`
-    display: flex;
-    flex: 1;
-    background: #fff;
-    border-radius: 16px;
-    text-align: center;
-    padding-left: 8px;
-    .searchbar-scanning-logo {
-      width: 30px;
-      align-self: center;
-      color: #9E9B98;
-    }
-    input {
-      display: block;
-      line-height: 30px;
-      flex: 1;
-      padding: 0 4px;
-      border: 0;
-      &:focus {
-        outline: 0;
-      }
-    }
-    .searchbar-button {
-      width: 60px;
-      button {
-        font-weight: bold;
-        width: 100%;
-        line-height: 30px;
-        border-radius: 16px;
-        background: #fb5d5a;
-        border: 2px solid #fff;
-        color: #fff;
-        text-align: center;
-      }
-    }
 `
 const StyledTopBarContainer = styled.div`
   display: flex;

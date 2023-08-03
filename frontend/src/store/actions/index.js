@@ -8,7 +8,8 @@ import {
 } from "./cartAction";
 import {
   createOrderAction,
-  getOrderDetailAction
+  getOrderDetailAction,
+  myOrderListAction
 } from "./orderAction"
 
 export { 
@@ -24,5 +25,6 @@ export {
   saveShippingDetailAction,
   savePaymentMethodsAction,
   createOrderAction,
-  getOrderDetailAction
+  getOrderDetailAction,
+  myOrderListAction
 }

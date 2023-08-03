@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { DefaultNavbar } from '../components'
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from 'react-router-dom'
-import { Toast, Grid, NoticeBar } from "antd-mobile"
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Grid, NoticeBar } from "antd-mobile"
 import { useDispatch, useSelector } from 'react-redux'
 import { Loader } from '../components'
 import { 
@@ -13,7 +13,11 @@ import {
 const Order = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { search } = useLocation()
   const { id } = useParams()
+
+  const redirect = search ? `/myorders` : '/cart'
+
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2)
   }
@@ -21,7 +25,7 @@ const Order = () => {
   const { userInfo } = userLogin
   const orderDetail = useSelector(state => state.orderDetail)
   const { loading, order, error } = orderDetail
-  
+  console.log(redirect);
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
   }
@@ -41,10 +45,10 @@ const Order = () => {
     }
     dispatch(getOrderDetailAction(id))
   }, [dispatch, id, userInfo, navigate])
-  console.log(order);
+  
   return loading ? <Loader /> : (
     <>
-      <DefaultNavbar back='/cart' title='订单详情' />
+      <DefaultNavbar back={redirect} title='订单详情' />
       <StyledBlock style={{ marginTop: '55px' }}>
         <h1>
           <i class="fa-regular fa-circle-user" style={{ marginRight: '4px' }}></i> 

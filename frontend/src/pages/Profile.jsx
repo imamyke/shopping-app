@@ -1,4 +1,5 @@
 import avatar from '../uploads/avatar.jpeg'
+import axios from 'axios'
 import styled from "styled-components"
 import clsx from 'clsx'
 import { useNavigate } from 'react-router-dom'
@@ -23,13 +24,31 @@ const Profile = () => {
   const userUpdateProfile = useSelector(state => state.userUpdate)
   const { success } = userUpdateProfile
 
-  const [image, setImage] = useState('')
-  const [uploading, setUploading] = useState(false)
   const [name, setName] = useState(user.name)
   const [accountName, setAccountName] = useState(user.accountName)
   const [phone, setPhone] = useState(user.phone)
   const [edit, setEdit] = useState(false)
-
+  
+  
+  const [image, setImage] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const handleUploadFile = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+    try {
+      const config = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
   useEffect(() => {
     if (!userInfo) {

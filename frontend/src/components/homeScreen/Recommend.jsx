@@ -2,17 +2,20 @@ import ProductCard from "../ProductCard"
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { productListAction } from "../../store/actions"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Loader } from '../../components'
+import { useParams } from "react-router-dom"
 
 const Recommend = () => {
   const dispatch = useDispatch()
   const results = useSelector(state => state.productList)
   const { loading, productList, error } = results
+  const { keyword } = useParams()
+  console.log(keyword);
 
   useEffect(() => {
-    dispatch(productListAction())
-  },[dispatch])
+    dispatch(productListAction(keyword))
+  },[dispatch, keyword])
 
   return (
     <StyledContainer>

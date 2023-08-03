@@ -10,12 +10,17 @@ import {
   Profile,
   ProductDetail,
   FillOrder,
-  Order 
+  Order,
+  MyOrders 
 } from '../pages'
 
 const routes = [
   {
     path: '/',
+    element: <Home />
+  },
+  {
+    path: '/search/:keyword',
     element: <Home />
   },
   {
@@ -61,6 +66,10 @@ const routes = [
   {
     path: '/order/:id',
     element: <Order />
+  },
+  {
+    path: '/myorders',
+    element: <MyOrders />
   },
 ]
 

@@ -10,6 +10,7 @@ import Profile from "./Profile";
 import ProductDetail from './ProductDetail'
 import FillOrder from './FillOrder'
 import Order from './Order'
+import MyOrders from "./MyOrders";
 
 export { 
   Home,
@@ -23,5 +24,6 @@ export {
   Logout, 
   Profile,
   FillOrder,
-  Order
+  Order,
+  MyOrders
 }
