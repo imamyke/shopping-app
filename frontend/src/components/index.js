@@ -4,6 +4,7 @@ import ProductCard from "./ProductCard";
 import Loader from "./Loader";
 import DefaultNavbar from "./DefaultNavbar"
 import Search from "./Search";
+import ProductCarousel from "./ProductCarousel";
 
 export { 
   BottomTabBar, 
@@ -11,5 +12,6 @@ export {
   ProductCard,
   Loader,
   DefaultNavbar,
-  Search
+  Search,
+  ProductCarousel
 }
