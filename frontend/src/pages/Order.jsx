@@ -27,7 +27,7 @@ const Order = () => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   const orderDetail = useSelector(state => state.orderDetail)
-  const { loading, order, error } = orderDetail
+  const { loading, order } = orderDetail
   const orderAdminPay = useSelector((state) => state.orderAdminPay)
   const { loading: loadingPay, success: successPay } = orderAdminPay
   const orderAdminDeliver = useSelector((state) => state.orderAdminDeliver)
@@ -48,7 +48,6 @@ const Order = () => {
   const handleDeliver = () => {
     dispatch(orderUpdateDelivered(order))
   }
-
   const handlePay = () => {
     dispatch(orderUpdatePaid(order))
   }

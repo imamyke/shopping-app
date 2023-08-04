@@ -19,10 +19,12 @@ import {
   GiftOutline,
   GlobalOutline,
   HistogramOutline,
-  FlagOutline
+  FlagOutline,
+  BankcardOutline,
+  ChatCheckOutline,
+  PayCircleOutline
 } from 'antd-mobile-icons'
 import styled from 'styled-components'
-
 
 const About = () => {
   const { pathname } = useLocation()
@@ -35,9 +37,6 @@ const About = () => {
   const { loading, productList } = products
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-  const right = (
-    <MoreOutline />
-  )
   
   useEffect(() => {
     if (!userInfo) {
@@ -78,23 +77,23 @@ const About = () => {
   const tabs = [
     {
       key: 'home',
-      title: '首页',
-      icon: <AppOutline />,
+      title: '待付款',
+      icon: <BankcardOutline />,
     },
     {
       key: 'todo',
-      title: '待办',
-      icon: <UnorderedListOutline />,
+      title: '待收货/使用',
+      icon: <GiftOutline />,
     },
     {
       key: 'message',
-      title: '消息',
-      icon: <MessageFill />,
+      title: '待评价',
+      icon: <ChatCheckOutline />,
     },
     {
       key: 'personalCenter',
-      title: '我的',
-      icon: <UserOutline />,
+      title: '退换/售后',
+      icon: <PayCircleOutline />,
     },
   ]
   const serviceTabs = [

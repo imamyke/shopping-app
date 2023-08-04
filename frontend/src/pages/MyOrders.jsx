@@ -3,8 +3,8 @@ import { DefaultNavbar, Loader } from "../components"
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { Grid, Tabs } from "antd-mobile"
-import { myOrderListAction } from '../store/actions'
+import { Grid, Tabs, Toast } from "antd-mobile"
+import { myOrderListAction, addToCartAction } from '../store/actions'
 
 
 const MyOrders = () => {
@@ -23,6 +23,13 @@ const MyOrders = () => {
       dispatch(myOrderListAction())
     }
   }, [navigate, userInfo, dispatch])
+
+  const handleAddToCart = (id, qty) => {
+    dispatch(addToCartAction(id, qty))
+    Toast.show({
+      content: '已加入购物车',
+    })
+  }
 
   let orderItems = []
   let orderPaidItems = []
@@ -70,7 +77,6 @@ const MyOrders = () => {
           <StyledProductCard 
             image={item.image} 
             key={idx}
-            onClick={() => navigate(`/order/${order[1]}?redirect=myorders`)}
           >
             <Grid columns={4}>
               <Grid.Item span={1}>
@@ -78,7 +84,7 @@ const MyOrders = () => {
                   <div className="image"></div>
                 </div>
               </Grid.Item>
-              <Grid.Item span={3}>
+              <Grid.Item span={3} onClick={() => navigate(`/order/${order[1]}?redirect=myorders`)}>
                 <div className="card-content">
                   <div>
                     <div className='status'>
@@ -109,7 +115,7 @@ const MyOrders = () => {
             <div className="cart-button">
               <button className='secondary'>查看发票</button>
               <button className='secondary'>退换/售后</button>
-              <button className='primary'>再次购买</button>
+              <button className='primary' onClick={() => handleAddToCart(item.product, 1)}>再次购买</button>
             </div>
             </StyledAction>
           </StyledProductCard>
