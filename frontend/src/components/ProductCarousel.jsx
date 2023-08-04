@@ -15,10 +15,18 @@ const ProductCarousel = () => {
   }, [dispatch])
 
   return loading ? <Loader /> : (
-      <Swiper autoplay>
+      <Swiper autoplay loop style={{ marginBottom: 10 }}>
         {products?.map(product => (
           <Swiper.Item key={product._id}>
-            {product.name}
+            <div style={{ margin: '0 10px', borderRadius: 10, overflow: 'hidden' }}>
+              <img 
+                src={product.image} 
+                width="100%" 
+                height={150}
+                alt={product.name} 
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
           </Swiper.Item>
         ))}
       </Swiper>

@@ -41,9 +41,9 @@ const Search = () => {
 export default Search
 
 const StyledSearchBar = styled.div`
+  flex: 1;
   form {
     display: flex;
-    flex: 1;
     background: #fff;
     border-radius: 16px;
     text-align: center;

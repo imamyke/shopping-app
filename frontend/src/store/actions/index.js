@@ -9,7 +9,9 @@ import {
 import {
   createOrderAction,
   getOrderDetailAction,
-  myOrderListAction
+  myOrderListAction,
+  orderUpdatePaid,
+  orderUpdateDelivered
 } from "./orderAction"
 
 export { 
@@ -26,5 +28,7 @@ export {
   savePaymentMethodsAction,
   createOrderAction,
   getOrderDetailAction,
-  myOrderListAction
+  myOrderListAction,
+  orderUpdatePaid,
+  orderUpdateDelivered
 }

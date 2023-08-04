@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { BottomTabBar, TopTabBar } from '../components'
 import { bottomTab, topTab } from '../constants'
 import homeScreen from '../components/homeScreen'
@@ -16,6 +16,8 @@ const Home = () => {
     setActiveIndex(index)
     swiperRef.current?.swipeTo(index)
   }
+  
+  
   return (
     <>
       <TopTabBar

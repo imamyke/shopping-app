@@ -15,7 +15,6 @@ const ProductDetail = () => {
   const { loading, product } = results
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
-  console.log(cartItems);
 
   // 導入產品資訊
   useEffect(() => {
@@ -32,61 +31,62 @@ const ProductDetail = () => {
   return (
     <>
       <DefaultNavbar back="/" title="产品详情" />
-      { loading && <Loader /> }
-      <StyledProductCard
-        image={`${product.image}`}
-      >
-        <div className='image-container'>
-          <div className="image"></div>
-        </div>
-      </StyledProductCard>
-      <StyledDetailContainer>
-        <div className="product-price">
-          ￥<span className="price">{product.price}</span>
-        </div>
-        <h1 className="product-name">{product.name}</h1>
+      { loading ? <Loader /> : (
+        <>
+          <StyledProductCard image={`${product.image}`}>
+            <div className='image-container'>
+              <div className="image"></div>
+            </div>
+          </StyledProductCard>
+          <StyledDetailContainer>
+            <div className="product-price">
+              ￥<span className="price">{product.price}</span>
+            </div>
+            <h1 className="product-name">{product.name}</h1>
 
-        <h1>规格参数</h1>
-          <table>
-            { product.brand && (
-              <tr>
-                <th>品牌</th>
-                <td>{product.brand}</td>
-              </tr>
-            ) }
-            { product.typeNum && (
-              <tr>
-                <th>型号</th>
-                <td>{product.typeNum}</td>
-              </tr>
-            ) }
-            { product.scale && (
-              <tr>
-                <th>规格</th>
-                <td>{product.scale}</td>
-              </tr>
-            ) }
-            { product.color && (
-              <tr>
-                <th>颜色样式</th>
-                <td>{product.color}</td>
-              </tr>
-            ) }
-            { product.style && (
-              <tr>
-                <th>款式</th>
-                <td>{product.style}</td>
-              </tr>
-            ) }
-            { product.materiel && (
-              <tr>
-                <th>材质</th>
-                <td>{product.materiel}</td>
-              </tr>
-            ) }
-          </table>
-      
-      </StyledDetailContainer>
+            <h2>规格参数</h2>
+              <table>
+                { product.brand && (
+                  <tr>
+                    <th>品牌</th>
+                    <td>{product.brand}</td>
+                  </tr>
+                ) }
+                { product.typeNum && (
+                  <tr>
+                    <th>型号</th>
+                    <td>{product.typeNum}</td>
+                  </tr>
+                ) }
+                { product.scale && (
+                  <tr>
+                    <th>规格</th>
+                    <td>{product.scale}</td>
+                  </tr>
+                ) }
+                { product.color && (
+                  <tr>
+                    <th>颜色样式</th>
+                    <td>{product.color}</td>
+                  </tr>
+                ) }
+                { product.style && (
+                  <tr>
+                    <th>款式</th>
+                    <td>{product.style}</td>
+                  </tr>
+                ) }
+                { product.materiel && (
+                  <tr>
+                    <th>材质</th>
+                    <td>{product.materiel}</td>
+                  </tr>
+                ) }
+              </table>
+          
+          </StyledDetailContainer>
+        </>
+      )}
       <StyledBottomTabBar>
         <div className="item quantity-container">
           <h1 className="title">
@@ -116,10 +116,15 @@ const StyledDetailContainer = styled.div`
   padding: 10px;
   border-radius: 10px;
   margin: 10px 10px 110px 10px;
-  h1 {
-    font-size: 16px;
+  h1, h2 {
     font-weight: bold;
     margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 16px;
+  }
+  h2 {
+    font-size: 14px;
   }
   .product-name {
     line-height: 20px;
@@ -139,7 +144,7 @@ const StyledDetailContainer = styled.div`
       border: 1px solid #aaa;
       line-height: 20px;
       padding: 0 4px;
-      font-size: 14px;
+      font-size: 12px;
     }
     th {
       font-weight: bold;

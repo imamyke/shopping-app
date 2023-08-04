@@ -28,27 +28,6 @@ const Profile = () => {
   const [accountName, setAccountName] = useState(user.accountName)
   const [phone, setPhone] = useState(user.phone)
   const [edit, setEdit] = useState(false)
-  
-  
-  const [image, setImage] = useState('')
-  const [uploading, setUploading] = useState(false)
-  const handleUploadFile = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
-    try {
-      const config = {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }
-      const { data } = await axios.post('/api/upload', formData, config)
-      setImage(data)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
-    }
-  }
 
   useEffect(() => {
     if (!userInfo) {
@@ -85,7 +64,7 @@ const Profile = () => {
       <StyledNavbarContainer>
         <NavBar onBack={() => navigate('/logout')}>修改个人信息</NavBar>
       </StyledNavbarContainer>
-      
+      { loading ? <Loader /> : (
         <StyledPersonalInfo>
           <StyledImageContainer url={avatar}>
             <div className="image-container">
@@ -115,15 +94,15 @@ const Profile = () => {
                   />
                 </div>
                 <div className='form-item'>
-                  <label htmlFor="nickName">帐号名</label>
+                  <label htmlFor="accountName">帐号名</label>
                   <span 
                     className={clsx('', { inputBody: true, isEdit: edit })}
                   >{accountName}</span>
                   <input 
                     className={clsx('', { isEdit: edit })}
                     ref={inputRef}
-                    id='nickName' type="text" 
-                    placeholder='请输入暱稱' 
+                    id='accountName' type="text" 
+                    placeholder='请输入帐号名' 
                     defaultValue={accountName}
                     onChange={(e) => setAccountName(e.target.value)}
                     required
@@ -156,6 +135,7 @@ const Profile = () => {
             
           </StyledFormContainer>
         </StyledPersonalInfo>
+      )}
     </>
   )
 }

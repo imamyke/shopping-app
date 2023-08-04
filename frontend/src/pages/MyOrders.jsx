@@ -3,7 +3,7 @@ import { DefaultNavbar, Loader } from "../components"
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
-import { Grid, NoticeBar } from "antd-mobile"
+import { Grid, Tabs } from "antd-mobile"
 import { myOrderListAction } from '../store/actions'
 
 
@@ -24,18 +24,100 @@ const MyOrders = () => {
     }
   }, [navigate, userInfo, dispatch])
 
-let orderItems = []
-if (orders) {
-  const orderDetail = orders.map(order => {
-    return order
-  })
-  const orderItemsInList = orderDetail.map(item => {
-    return [item.orderItems, item._id, item.isDelivered]
-  })
-  for (let item of orderItemsInList) {
-    orderItems.push(item)
+  let orderItems = []
+  let orderPaidItems = []
+  let orderNotPaidItems = []
+  let orderDoneItems = []
+  let orderShippingItems = []
+  if (orders) {
+    const orderDetail = orders?.map(order => {
+      return order
+    })
+    const orderItemsInList = orderDetail?.map(item => {
+      return [
+        item.orderItems, 
+        item._id, 
+        item.isDelivered, 
+        item.isPaid
+      ]
+    })
+    for (let item of orderItemsInList) {
+      // orderDoneItems
+      if (item[2] && item[3]) {
+        orderDoneItems.push(item)
+      }
+      // orderShippingItems
+      if (!item[2]) {
+        orderShippingItems.push(item)
+      }
+      // orderPaidItems
+      if (item[3]) {
+        orderPaidItems.push(item)
+      }
+      // orderNotPaidItems
+      if (!item[3]) {
+        orderNotPaidItems.push(item)
+      }
+      // orderItems
+      orderItems.push(item)
+    }
   }
-}
+
+  const OrderItem = ({ orders }) => (
+    orders.map(order => 
+      order[0].map((item, idx) => 
+        <>
+          <StyledProductCard 
+            image={item.image} 
+            key={idx}
+            onClick={() => navigate(`/order/${order[1]}?redirect=myorders`)}
+          >
+            <Grid columns={4}>
+              <Grid.Item span={1}>
+                <div className='image-container'>
+                  <div className="image"></div>
+                </div>
+              </Grid.Item>
+              <Grid.Item span={3}>
+                <div className="card-content">
+                  <div>
+                    <div className='status'>
+                      {order[2] && order[3] ? (
+                        <span className='shipping-status'>已完成</span>
+                      ) : (
+                        <>
+                          <span className='shipping-status'>{order[2] ? '已運送' : '待收貨'}</span>
+                          <span className='paid-status'>{order[3] ? '已付款' : '待付款'}</span>
+                        </>
+                      )}
+                    </div>
+                    <p className="card-title">
+                      {item.name}
+                    </p>
+                  </div>
+                  <div className="card-price">
+                    <div>
+                    ￥<span className="price">{item.price}</span>
+                    </div>
+                    <div className='quantity'>{item.qty}件</div>
+                  </div>
+                </div>
+              </Grid.Item>
+            </Grid>
+            <StyledAction>
+            <span>更多</span>
+            <div className="cart-button">
+              <button className='secondary'>查看发票</button>
+              <button className='secondary'>退换/售后</button>
+              <button className='primary'>再次购买</button>
+            </div>
+            </StyledAction>
+          </StyledProductCard>
+        </>
+      )
+    )
+  )
+
   return (
     <>
       <DefaultNavbar back="/about" title="我的订单" />
@@ -43,49 +125,25 @@ if (orders) {
         ? <Loader /> 
         : (
         <StyledOrderContainer>
-          {orderItems.map(order => 
-            order[0].map((item, idx)=> 
-              <>
-                <StyledProductCard 
-                  image={item.image} 
-                  key={idx}
-                  onClick={() => navigate(`/order/${order[1]}?redirect=myorders`)}
-                >
-                  <Grid columns={4}>
-                    <Grid.Item span={1}>
-                      <div className='image-container'>
-                        <div className="image"></div>
-                      </div>
-                    </Grid.Item>
-                    <Grid.Item span={3}>
-                      <div className="card-content">
-                        <div>
-                          <p className='shipping-status'>{order[2] ? '完成' : '运送中'}</p>
-                          <p className="card-title">
-                            {item.name}
-                          </p>
-                        </div>
-                        <div className="card-price">
-                          <div>
-                          ￥<span className="price">{item.price}</span>
-                          </div>
-                          <div className='quantity'>{item.qty}件</div>
-                        </div>
-                      </div>
-                    </Grid.Item>
-                  </Grid>
-                  <StyledAction>
-                  <span>更多</span>
-                  <div className="cart-button">
-                    <button className='secondary'>查看发票</button>
-                    <button className='secondary'>退换/售后</button>
-                    <button className='primary'>再次购买</button>
-                  </div>
-                  </StyledAction>
-                </StyledProductCard>
-              </>
-            )
-          )}
+          <Tabs 
+            onChange={(e) => console.log(e)}
+          >
+            <Tabs.Tab title='全部' key='all'>
+              <OrderItem orders={orderItems} />
+            </Tabs.Tab>
+            <Tabs.Tab title='已完成' key='done'>
+              <OrderItem orders={orderDoneItems} />
+            </Tabs.Tab>
+            <Tabs.Tab title='已付款' key='paid'>
+              <OrderItem orders={orderPaidItems} />
+            </Tabs.Tab>
+            <Tabs.Tab title='待付款' key='notPaid'>
+              <OrderItem orders={orderNotPaidItems} />
+            </Tabs.Tab>
+            <Tabs.Tab title='待收货' key='shipping'>
+              <OrderItem orders={orderShippingItems} />
+            </Tabs.Tab>
+          </Tabs>
         </StyledOrderContainer>
         )}
     </>
@@ -123,8 +181,12 @@ const StyledAction = styled.div`
 `
 
 const StyledOrderContainer = styled.div`
+  .adm-tabs-tab-active {
+    color: rgb(225, 37, 27);
+  }
+  --adm-color-primary: rgb(225, 37, 27);
   border-radius: 10px;
-  margin-top: 55px;
+  margin-top: 45px;
   margin-bottom: 85px;
   .detail-table {
     background: #fff;
@@ -171,7 +233,10 @@ const StyledProductCard = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    .shipping-status{
+    .status{
+      .shipping-status {
+        margin-right: 8px;
+      }
       color: #aaaaaa;
       margin-bottom: 4px;
     }

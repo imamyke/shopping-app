@@ -8,7 +8,10 @@ import { Loader } from '../components'
 import { 
   addToCartAction, 
   getOrderDetailAction,
+  orderUpdatePaid, 
+  orderUpdateDelivered
 } from "../store/actions"
+import { ORDER_UPDATE_DELIVER_RESET, ORDER_UPDATE_PAY_RESET } from "../store/types/orderConstants"
 
 const Order = () => {
   const navigate = useNavigate()
@@ -25,7 +28,11 @@ const Order = () => {
   const { userInfo } = userLogin
   const orderDetail = useSelector(state => state.orderDetail)
   const { loading, order, error } = orderDetail
-  console.log(redirect);
+  const orderAdminPay = useSelector((state) => state.orderAdminPay)
+  const { loading: loadingPay, success: successPay } = orderAdminPay
+  const orderAdminDeliver = useSelector((state) => state.orderAdminDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderAdminDeliver
+
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
   }
@@ -38,26 +45,62 @@ const Order = () => {
       }
     }).join('')
   }
-  
+  const handleDeliver = () => {
+    dispatch(orderUpdateDelivered(order))
+  }
+
+  const handlePay = () => {
+    dispatch(orderUpdatePaid(order))
+  }
   useEffect(() => {
     if (!userInfo) {
       navigate('/login')
     }
-    dispatch(getOrderDetailAction(id))
-  }, [dispatch, id, userInfo, navigate])
+    if (!order || order._id !== id || successPay || successDeliver) {
+      dispatch({ type: ORDER_UPDATE_DELIVER_RESET })
+      dispatch({ type: ORDER_UPDATE_PAY_RESET })
+      dispatch(getOrderDetailAction(id))
+    }
+  }, [dispatch, id, userInfo, navigate, successPay, successDeliver, order])
   
   return loading ? <Loader /> : (
     <>
       <DefaultNavbar back={redirect} title='订单详情' />
-      <StyledBlock style={{ marginTop: '55px' }}>
-        <h1>
-          <i class="fa-regular fa-circle-user" style={{ marginRight: '4px' }}></i> 
-          {order.shippingDetail.name}
-          <span className='order-phone'>{phoneTransfer(order.shippingDetail.phone)}</span>
-        </h1>
-        <span className='order-address'>地址: {order.shippingDetail.address}</span>
+      <StyledBlock>
+        <div>
+          <h1>
+            <i class="fa-regular fa-circle-user" style={{ marginRight: '4px' }}></i> 
+            {order?.shippingDetail.name}
+            <span className='order-phone'>{phoneTransfer(order?.shippingDetail.phone)}</span>
+          </h1>
+          <span className='order-address'>地址: {order?.shippingDetail.address}</span>
+        </div>
+        <div>
+          { userInfo && userInfo.isAdmin && !order.isDelivered && (
+            <button onClick={handleDeliver}>完成運送</button>
+          )}
+          { userInfo && userInfo.isAdmin && !order.isPaid && (
+            <button onClick={handlePay}>完成付款</button>
+          )}
+        </div>
       </StyledBlock>
       <StyledOrderContainer>
+        <StyledOrderStatus>
+          { loadingDeliver && <Loader /> }
+          { loadingPay && <Loader /> }
+          <span 
+            className='order-phone' 
+            style={{ marginLeft: '8px', color: order.isDelivered && 'rgb(225, 37, 27)' }}
+          >
+            {order.isDelivered ? "已完成運送" : "运送中"}
+          </span>
+          <span 
+            className='order-phone' 
+            style={{ marginLeft: '8px', color: order.isPaid && 'rgb(225, 37, 27)' }}
+          >
+            {order.isPaid ? "已付款" : "未付款"}
+          </span>
+        </StyledOrderStatus>
         {order.orderItems.map(item => (
           <StyledProductCard image={item.image} key={item.product}>
           <Grid columns={4}>
@@ -107,7 +150,6 @@ const Order = () => {
               <th>下单时间</th>
               <td>{order.createdAt.substring(0, 10)}</td>
             </tr>
-            
           </table>
         </div>
       </StyledOrderContainer>
@@ -125,6 +167,11 @@ const Order = () => {
 
 export default Order
 
+const StyledOrderStatus = styled.div`
+  margin-bottom: 10px;
+  padding-right: 20px;
+  text-align: right;
+`
 
 const StyledOrderContainer = styled.div`
   padding: 10px;
@@ -155,7 +202,10 @@ const StyledOrderContainer = styled.div`
 }
 `
 const StyledBlock = styled.div`
-  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 55px 0 10px 0;
   padding: 10px;
   background: #fff;
   border-radius: 10px;
@@ -170,6 +220,13 @@ const StyledBlock = styled.div`
   .order-phone {
     margin-left: 4px;
     color: #666;
+  }
+  button {
+    border: 0;
+    margin-left: 16px;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
   }
 `
 const StyledBottomTabBar = styled.div`

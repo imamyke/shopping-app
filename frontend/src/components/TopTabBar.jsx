@@ -120,6 +120,7 @@ const StyledTopBarHeader = styled.header`
 `
 const StyledTopBarContainer = styled.div`
   display: flex;
+  justify-content: space-between;
 `
 const StyledLoginIcon = styled.div`
   width: 36px;

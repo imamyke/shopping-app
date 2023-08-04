@@ -70,9 +70,14 @@ html { /* 100/75*100 */
 }
 body {
   font-size: 12px;
+	background: #eeeeee;
 }
 
 /* 自定義 */
 :root {
 	--adm-color-background: 0;
+}
+
+body {
+	font-family: Microsoft YaHei;
 }

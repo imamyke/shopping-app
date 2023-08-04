@@ -20,7 +20,9 @@ import {
   orderCreateReducer,
   orderDetailReducer,
   orderPayReducer,
-  orderMyListReducer
+  orderMyListReducer,
+  orderAdminDeliverReducer,
+  orderAdminPayReducer
 } from "./orderReducer"
 
 export { 
@@ -36,5 +38,7 @@ export {
   orderPayReducer,
   orderMyListReducer,
   productReviewCreateReducer,
-  productTopRatedReducer
+  productTopRatedReducer,
+  orderAdminDeliverReducer,
+  orderAdminPayReducer
 }
