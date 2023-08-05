@@ -2,9 +2,15 @@ import styled from "styled-components"
 import { Stepper, Toast } from "antd-mobile"
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { productDetailAction, addToCartAction } from "../store/actions"
+import { 
+  productDetailAction, 
+  addToCartAction,
+  addToCollectionAction,
+  removeFromCollectionAction 
+} from "../store/actions"
 import { useEffect, useState } from "react"
 import { Loader, DefaultNavbar } from '../components'
+import { StarOutline, StarFill } from 'antd-mobile-icons'
 
 const ProductDetail = () => {
   const dispatch = useDispatch()
@@ -13,19 +19,31 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1)
   const results = useSelector(state => state.productDetail)
   const { loading, product } = results
-  const cart = useSelector(state => state.cart)
-  const { cartItems } = cart
-
+  const collection = useSelector(state => state.productCollection)
+  const { collectionItems } = collection
+  const [collect, setCollect] = useState(false)
   // 導入產品資訊
   useEffect(() => {
     dispatch(productDetailAction(id))
   }, [dispatch, id])
+  
 
+  
   const handleAddToCart = (id, qty) => {
     dispatch(addToCartAction(id, qty))
     Toast.show({
       content: '已加入购物车',
     })
+  }
+  
+  const handleCollect = (id) => {
+    if (collect) {
+      setCollect(!collect)
+      dispatch(removeFromCollectionAction(id))
+    } else {
+      setCollect(!collect)
+      dispatch(addToCollectionAction(id))
+    }
   }
 
   return (
@@ -37,13 +55,23 @@ const ProductDetail = () => {
             <div className='image-container'>
               <div className="image"></div>
             </div>
+            <StyledCollection onClick={() => handleCollect(product._id)}>
+              {collect ? (
+                <div className="star-container">
+                  <StarFill className="icon" style={{ color: '#e75406' }} />
+                </div>
+              ) : (
+                <div className="star-container">
+                  <StarOutline className="icon" />
+                </div>
+              )}
+            </StyledCollection>
           </StyledProductCard>
           <StyledDetailContainer>
             <div className="product-price">
               ￥<span className="price">{product.price}</span>
             </div>
             <h1 className="product-name">{product.name}</h1>
-
             <h2>规格参数</h2>
               <table>
                 { product.brand && (
@@ -82,8 +110,7 @@ const ProductDetail = () => {
                     <td>{product.materiel}</td>
                   </tr>
                 ) }
-              </table>
-          
+              </table>         
           </StyledDetailContainer>
         </>
       )}
@@ -110,6 +137,29 @@ const ProductDetail = () => {
 }
 
 export default ProductDetail
+
+const StyledCollection = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 24px;
+  margin: 10px;
+  .star-container {
+    width: 32px;
+    height: 32px;
+    background: #000;
+    opacity: 0.6;
+    border-radius: 50%;
+    position: relative;
+    .icon {
+      color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+`
 
 const StyledDetailContainer = styled.div`
   background: #fff;
@@ -156,6 +206,7 @@ const StyledDetailContainer = styled.div`
   }
 `
 const StyledProductCard = styled.div`
+  position: relative;
   margin-top: 45px;
   overflow: hidden;
   background-color: #fff;

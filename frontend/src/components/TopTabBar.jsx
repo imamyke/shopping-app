@@ -87,7 +87,7 @@ const TopTabBar = ({ tabName, activeIndex, setActiveIndex, onChange, swiperRef, 
 export default TopTabBar
 
 const StyledTopBarHeader = styled.header`
-  background: #fb5d5a;
+  background: rgb(225, 37, 27);
   padding: 16px 12px 0 12px;
   position: fixed;
   top: 0;
@@ -112,7 +112,7 @@ const StyledTopBarHeader = styled.header`
     text-align: center;
     color: #fff;
     line-height: 30px;
-    background: #fb5d5a;
+    background: rgb(225, 37, 27);
   }
   .adm-tabs-header {
     border-bottom: 0;

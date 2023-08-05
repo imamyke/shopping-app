@@ -1,8 +1,7 @@
-import { useLocation, useNavigate, Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { BottomTabBar, Loader } from '../components'
 import bottomTab from '../constants/bottomTab'
-import { NavBar, Grid, Avatar } from 'antd-mobile'
-import { SetOutline, MoreOutline } from 'antd-mobile-icons'
+import { NavBar, Grid } from 'antd-mobile'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetail } from '../store/actions/userAction'
@@ -12,7 +11,6 @@ import {
   AppOutline,
   MessageFill,
   UnorderedListOutline,
-  UserOutline,
   ReceivePaymentOutline,
   UserContactOutline,
   BellOutline,

@@ -12,7 +12,7 @@ const StyledBottomTabBar = styled.div`
     color: #453C41;
   }
   .adm-tab-bar-item-active {
-    color: #fb5d5a;
+    color: rgb(225, 37, 27);
     font-weight: bold;
   }
 `

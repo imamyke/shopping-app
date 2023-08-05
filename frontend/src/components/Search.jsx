@@ -70,7 +70,7 @@ const StyledSearchBar = styled.div`
         width: 100%;
         line-height: 30px;
         border-radius: 16px;
-        background: #fb5d5a;
+        background: rgb(225, 37, 27);
         border: 2px solid #fff;
         color: #fff;
         text-align: center;

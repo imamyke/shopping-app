@@ -12,6 +12,9 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_ADD_COLLECTION,
+  PRODUCT_REMOVE_COLLECTION,
+  PRODUCT_REMOVE_COLLECTIONS
 } from '../types/productConstants'
 
 export const productListReducer = (
@@ -72,6 +75,40 @@ export const productTopRatedReducer = (
       return { loading: false, products: action.payload }
     case PRODUCT_TOP_FAIL:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+export const productCollectReducer = (
+  state = { collectionItems: [] }, 
+  action
+  ) => {
+  switch (action.type) {
+    case PRODUCT_ADD_COLLECTION:
+      const item = action.payload
+      const existItem = state.collectionItems.find(collectionItem => collectionItem.product === item.product)
+      
+      if (existItem) {
+        return {
+          ...state,
+          collectionItems: state.collectionItems.map(collectionItem => collectionItem.product === existItem.product ? item : collectionItem)
+        }
+      } else {
+        return {
+          ...state,
+          collectionItems: [...state.collectionItems, item]
+        }
+      }
+    case PRODUCT_REMOVE_COLLECTION:
+      return {
+        ...state,
+        collectionItems: state.collectionItems.filter(collectionItem => collectionItem.product !== action.payload)
+      }
+    // case PRODUCT_REMOVE_COLLECTIONS:
+    //   return {
+    //     ...state,
+    //     collectionItems: []
+    //   }
     default:
       return state
   }

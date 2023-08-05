@@ -12,7 +12,10 @@ import {
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
-  PRODUCT_TOP_FAIL,      
+  PRODUCT_TOP_FAIL,
+  PRODUCT_ADD_COLLECTION,
+  PRODUCT_REMOVE_COLLECTION,
+  PRODUCT_REMOVE_COLLECTIONS      
 } from "../types/productConstants"
 
 export const productListAction = (keyword = '') => async (dispatch) => {
@@ -102,4 +105,29 @@ export const productTopRated = () => async (dispatch) => {
           : error.response
     })
   }
+}
+
+export const addToCollectionAction = (id) => 
+  async (dispatch, getState) => {
+    const { data } = await axios.get(`/api/products/${id}`)
+    dispatch({
+      type: PRODUCT_ADD_COLLECTION,
+      payload: {
+        product: data._id,
+        name: data.name,
+        image: data.image,
+        price: data.price,
+        countInStock: data.countInStock,
+      }
+    })
+    localStorage.setItem('collectionItems', JSON.stringify(getState().productCollection.collectionItems))
+}
+
+export const removeFromCollectionAction = (id) => async (dispatch, getState) => {
+  dispatch({
+    type: PRODUCT_REMOVE_COLLECTION,
+    payload: id
+  })
+  
+  localStorage.setItem('collectionItems', JSON.stringify(getState().productCollection.collectionItems))
 }
