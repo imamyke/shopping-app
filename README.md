@@ -56,11 +56,11 @@
 ## 專案安裝流程
 1. Clone此專案至本機電腦
 ```
-git clone 
+git clone https://github.com/imamyke/shopping-app.git
 ```
 2. 進入此專案資料夾
 ```
-cd 
+cd shopping-app
 ```
 3. 安裝 npm 套件
 ```
